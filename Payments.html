@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buy ChaseCat Ebook</title>
+  <!-- Google Fonts: Luckiest Guy -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    /* Global & Reset */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Luckiest Guy', cursive;
+      background: 
+        linear-gradient(135deg, #000428 0%, #004e92 100%),
+        radial-gradient(circle at top right, rgba(255,140,0,0.1) 0%, transparent 60%),
+        radial-gradient(circle at bottom left, rgba(255,215,0,0.1) 0%, transparent 60%);
+      background-blend-mode: soft-light;
+      background-size: cover, cover, cover;
+      background-repeat: no-repeat, no-repeat, no-repeat;
+      color: #ffffff;
+      line-height: 1.6;
+      padding-bottom: 60px; /* Space for fixed footer */
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.15' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #000428 0%, #004e92 100%);
+      padding: 20px;
+      text-align: center;
+      border-bottom: 2px solid rgba(255,255,255,0.3);
+    }
+    header h1 {
+      color: #fff;
+      font-size: 2.5em;
+      margin: 0;
+      animation: fadeInDown 1s ease-out;
+    }
+    header p {
+      color: #fff;
+      font-size: 1.2em;
+      animation: fadeInDown 1s ease-out 0.5s;
+      animation-fill-mode: forwards;
+      opacity: 0;
+    }
+
+    /* Top Menu Container */
+    .top-menu-container {
+      background: linear-gradient(135deg, #000428 0%, #004e92 100%);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px auto;
+      max-width: 1200px;
+    }
+    .main-site-button {
+      background: linear-gradient(45deg, #ff8c00, #ffd700);
+      color: #000;
+      padding: 10px 20px;
+      border: 3px solid #000;
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 1em;
+      font-weight: bold;
+      transition: transform 0.3s;
+    }
+    .main-site-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    }
+    .social-icons {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+    .social-icon-container {
+      background: linear-gradient(135deg, #ff8c00, #ffd700);
+      border-radius: 50%;
+      padding: 5px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .social-icon-container img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+    }
+    .menu-container {
+      position: relative;
+    }
+    .menu-button {
+      background: transparent;
+      border: none;
+      font-size: 1.5em;
+      cursor: pointer;
+      color: #fff;
+    }
+    .dropdown-menu {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 50px;
+      right: 0;
+      background: #fff;
+      color: #000;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      padding: 10px;
+      z-index: 9999;
+      min-width: 150px;
+    }
+    .dropdown-menu a {
+      text-decoration: none;
+      color: #000;
+      padding: 5px 0;
+      font-size: 1em;
+      display: block;
+      transition: background 0.3s;
+    }
+    .dropdown-menu a:hover {
+      background: #f0f0f0;
+      border-radius: 5px;
+    }
+
+    /* Main Content */
+    .content {
+      background: linear-gradient(135deg, #ff8c00, #ffd700);
+      color: #000;
+      padding: 20px;
+      border-radius: 50px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      max-width: 800px;
+      margin: 20px auto;
+      animation: fadeInUp 1s ease-out;
+    }
+    .content h2 {
+      font-size: 2em;
+      margin-top: 0;
+    }
+    .content p {
+      font-size: 1.2em;
+    }
+    .payment-info {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+      color: #000;
+    }
+    .cta-button {
+      background: linear-gradient(45deg, #ff8c00, #ffd700);
+      color: #000;
+      padding: 15px 30px;
+      border: 3px solid #000;
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 1.5em;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: transform 0.3s;
+      display: inline-block;
+    }
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    }
+    .back-button {
+      background: linear-gradient(45deg, #ff8c00, #ffd700);
+      color: #000;
+      padding: 10px 20px;
+      border: 3px solid #000;
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 1em;
+      font-weight: bold;
+      transition: transform 0.3s;
+      display: inline-block;
+      margin-top: 20px;
+    }
+    .back-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    }
+
+    /* Instructions Section */
+    .instructions-header {
+      background: #fff;
+      color: #000;
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      margin: 20px auto;
+      max-width: 800px;
+      font-size: 1.8em;
+    }
+    .instruction-box {
+      background: #fff;
+      color: #000;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      margin: 10px auto;
+      max-width: 800px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .instruction-icon {
+      width: 50px;
+      height: 50px;
+    }
+    .instruction-content h4 {
+      margin: 0;
+      font-size: 1.2em;
+    }
+    .instruction-content p {
+      margin: 5px 0 0 0;
+      font-size: 1em;
+    }
+
+    /* Footer */
+    footer {
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      text-align: center;
+      padding: 10px 0;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      border-top: 2px solid rgba(255,255,255,0.3);
+      animation: fadeInUp 1s ease-out 1s;
+      animation-fill-mode: forwards;
+      opacity: 0;
+    }
+
+    /* Keyframe Animations */
+    @keyframes fadeInDown {
+      0% { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="top-menu-container">
+      <a href="index.html" class="main-site-button">Main Site</a>
+      <div class="social-icons">
+        <div class="social-icon-container">
+          <a href="https://dexscreener.com" target="_blank">
+            <img src="dexscreener.png" alt="Dexscreener" />
+          </a>
+        </div>
+        <div class="social-icon-container">
+          <a href="https://pump.fun" target="_blank">
+            <img src="pumpfun.png" alt="Pump.fun" />
+          </a>
+        </div>
+        <div class="social-icon-container">
+          <a href="https://tinyurl.com/5ybcbf29" target="_blank">
+            <img src="x.png" alt="X (Twitter)" />
+          </a>
+        </div>
+        <div class="social-icon-container">
+          <a href="https://t.me/+9kryXOWNfao0YzI0" target="_blank">
+            <img src="telegram.png" alt="Telegram" />
+          </a>
+        </div>
+      </div>
+      <div class="menu-container">
+        <button class="menu-button" onclick="toggleDropdown()">☰</button>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a href="index.html">Home</a>
+          <a href="BuyEbook.html">Buy Ebook</a>
+        </div>
+      </div>
+    </div>
+    <h1>Buy ChaseCat Ebook</h1>
+    <p>Unlock Your Full Potential</p>
+  </header>
+
+  <!-- Main Content -->
+  <div class="content">
+    <h2>ChaseCat Ebook</h2>
+    <p>
+      The ChaseCat book isn’t just another manual—it’s a heartfelt call to awaken your inner strength. If you feel overwhelmed by constant struggles and notice opportunities fading before you, this book provides transformative strategies, mindset shifts, and genuine guidance to help you reclaim control of your life. There’s no external hero waiting; the power to change everything lies within you. Now is the moment to rise above hesitation and embrace action.
+    </p>
+    <p class="payment-info">Price: $1.20 = (0.00613 SOL)</p>
+    <a href="http://t.me/ChaseEbook_bot" class="cta-button">Buy on Telegram</a>
+    <a href="index.html" class="back-button">⬅️ Back to Site</a>
+  </div>
+
+  <!-- Instructions Section -->
+  <h3 class="instructions-header">How Your Ebook Will Be Delivered (Telegram Bot Edition)</h3>
+  <div class="instruction-box">
+    <img src="solana.png" alt="Solana Icon" class="instruction-icon" />
+    <div class="instruction-content">
+      <h4>1. Send Payment</h4>
+      <p>Transfer $1.20 (0.00613 SOL) to the wallet address provided by the Telegram bot.</p>
+    </div>
+  </div>
+  <div class="instruction-box">
+    <img src="greencheck.png" alt="Verification Icon" class="instruction-icon" />
+    <div class="instruction-content">
+      <h4>2. Automatic Verification</h4>
+      <p>The bot will detect and confirm your payment.</p>
+    </div>
+  </div>
+  <div class="instruction-box">
+    <img src="bot.png" alt="Bot Icon" class="instruction-icon" />
+    <div class="instruction-content">
+      <h4>3. Instant Delivery</h4>
+      <p>Once verified, the bot will instantly send you the ChaseCat ebook directly in your Telegram chat.</p>
+    </div>
+  </div>
+  <div class="instruction-box">
+    <img src="phantom.png" alt="Phantom Icon" class="instruction-icon" />
+    <div class="instruction-content">
+      <h4>4. Recommended</h4>
+      <p>Use PhantomWallet for easy, fast & small transactions.</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 ChaseCat Token. All Rights Reserved. Built to inspire!</p>
+  </footer>
+
+  <script>
+    function toggleDropdown() {
+      var dropdown = document.getElementById("dropdownMenu");
+      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    }
+  </script>
+</body>
+</html>

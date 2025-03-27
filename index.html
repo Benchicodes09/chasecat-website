@@ -1,0 +1,2102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chasecat Token</title>
+    <!-- Google Fonts: Luckiest Guy -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Confetti Library for Celebration -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+      /* Global & Reset */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: 'Luckiest Guy', cursive;
+        background: 
+          linear-gradient(135deg, #000428 0%, #004e92 100%),
+          radial-gradient(circle at top right, rgba(255,140,0,0.1) 0%, transparent 60%),
+          radial-gradient(circle at bottom left, rgba(255,215,0,0.1) 0%, transparent 60%);
+        background-blend-mode: soft-light;
+        position: relative;
+        color: #ffffff;
+        line-height: 1.6;
+      }
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.15' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      /* Keyframe Animations */
+      @keyframes fadeInDown {
+        0%   { opacity: 0; transform: translateY(-20px); }
+        100% { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes fadeInUp {
+        0%   { opacity: 0; transform: translateY(20px); }
+        100% { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes pushInOut {
+        0%   { transform: scale(1); }
+        50%  { transform: scale(0.9); }
+        100% { transform: scale(1); }
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes fadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; }
+      }
+
+      /* Header */
+      header {
+        background: linear-gradient(135deg, #000428 0%, #004e92 100%);
+        padding: 35px 20px;
+        text-align: center;
+        position: relative;
+        margin-bottom: 40px;
+        border-bottom: 4px solid;
+        border-image: linear-gradient(90deg, #ff8c00, #ffd700) 1;
+        animation: gradientAnimation 8s ease infinite;
+      }
+      @keyframes gradientAnimation {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+          radial-gradient(circle at 20% 50%, rgba(255,140,0,0.15) 0%, transparent 50%),
+          radial-gradient(circle at 80% 50%, rgba(255,215,0,0.15) 0%, transparent 50%);
+        pointer-events: none;
+      }
+      header h1 {
+        font-size: 4.2em;
+        text-transform: uppercase;
+        margin: 0;
+        background: linear-gradient(45deg, #ffffff 10%, #ffd700 50%, #ff8c00 90%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: 3px;
+        filter: drop-shadow(3px 3px 2px rgba(0,0,0,0.4));
+        animation: fadeInDown 1s ease-out;
+        position: relative;
+      }
+      header h1::after {
+        content: attr(data-text);
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: -1;
+        background: linear-gradient(45deg, #ff8c00, #ffd700);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        opacity: 0.3;
+        transform: translateY(2px);
+        filter: blur(4px);
+      }
+      header p {
+        font-size: 1.2em;
+        margin-top: 10px;
+        color: #ccc;
+        animation: fadeInDown 1s ease-out 0.5s;
+        animation-fill-mode: forwards;
+      }
+
+      /* Top Menu Container */
+      .top-menu-container {
+        width: 90%;
+        margin: 0 auto 20px auto;
+        background: linear-gradient(135deg, #000428 0%, #004e92 100%);
+        color: #fff;
+        border-radius: 20px;
+        padding: 12px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        border: 3px solid #000;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      }
+      .menu-button {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        margin-right: 10px;
+        color: #fff;
+        font-family: inherit;
+        transition: all 0.3s ease;
+        position: relative;
+        width: 30px;
+        height: 30px;
+        padding: 0;
+      }
+      .menu-button span,
+      .menu-button span::before,
+      .menu-button span::after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 3px;
+        background-color: #fff;
+        transition: all 0.3s ease;
+        left: 0;
+      }
+      .menu-button span {
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .menu-button span::before {
+        top: -8px;
+      }
+      .menu-button span::after {
+        bottom: -8px;
+      }
+      .menu-button.active span {
+        background: transparent;
+      }
+      .menu-button.active span::before {
+        transform: rotate(45deg) translate(5px, 8px);
+      }
+      .menu-button.active span::after {
+        transform: rotate(-45deg) translate(5px, -8px);
+      }
+      .dropdown-menu {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 50px;
+        left: 0;
+        background: #fff;
+        color: #000;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        padding: 10px;
+        z-index: 9999;
+        min-width: 150px;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+      .dropdown-menu.show {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .dropdown-menu a {
+        text-decoration: none;
+        color: #000;
+        padding: 5px 0;
+        font-size: 1em;
+        display: block;
+        transition: background 0.3s;
+      }
+      .dropdown-menu a:hover {
+        background: #f0f0f0;
+        border-radius: 5px;
+      }
+
+      /* Orange Round Buy eBook Button */
+      .ebook-button {
+        background: linear-gradient(45deg, #ff8c00, #e74c3c);
+        color: #fff;
+        text-decoration: none;
+        border: none;
+        border-radius: 20px;
+        padding: 8px 15px;
+        font-weight: bold;
+        transition: background 0.3s ease;
+      }
+      .ebook-button:hover {
+        background: #ff8c00;
+      }
+
+      /* Buy Button Container in Header */
+      .buy-container {
+        margin-top: 15px;
+        display: inline-block;
+        animation: fadeInDown 1s ease-out 0.8s;
+        animation-fill-mode: forwards;
+      }
+      .buy-button {
+        background: linear-gradient(45deg, #ff8c00, #ffd700);
+        color: #000000;
+        padding: 15px 35px;
+        border: 3px solid #000000;
+        border-radius: 12px;
+        text-decoration: none;
+        font-size: 1.2em;
+        font-weight: bold;
+        transition: transform 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        display: inline-block;
+        margin: 15px 0;
+      }
+      .buy-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+      }
+
+      /* Marquee Announcement */
+      .marquee-container {
+        background: rgba(0, 0, 0, 0.9);
+        padding: 10px 0;
+        margin: 0;
+      }
+      .marquee-container marquee {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #FFD700;
+      }
+
+      /* Container */
+      .container {
+        margin: 20px auto;
+        max-width: 1200px;
+        padding: 20px;
+        background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(0,40,70,0.8));
+        border-radius: 30px;
+        border: 3px solid #000;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        position: relative;
+        overflow: hidden;
+      }
+      .container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, rgba(255,140,0,0.1), rgba(255,215,0,0.1));
+        pointer-events: none;
+      }
+
+      /* Section Base – very round */
+      .section {
+        margin-bottom: 40px;
+        padding: 25px;
+        background: linear-gradient(135deg, #ff8c00, #ffd700);
+        border-radius: 50px;
+        border: 3px solid #000;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        text-align: center;
+        animation: fadeInUp 1s ease-out;
+        color: #000;
+      }
+      .section h2 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+      }
+      .section p {
+        font-size: 1.2em;
+      }
+
+      /* Characters Section */
+      .characters {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 20px;
+        animation: fadeInUp 1s ease-out 0.3s;
+        animation-fill-mode: forwards;
+      }
+      .character {
+        text-align: center;
+        margin: 20px;
+      }
+      .character img {
+        width: 220px;
+        border-radius: 15px;
+        transition: transform 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+      }
+      .character img:hover {
+        transform: scale(1.05);
+      }
+      .character h3 {
+        font-size: 1.5em;
+        margin-top: 10px;
+      }
+
+      /* Motivational Images */
+      .motivation-title {
+        text-align: center;
+        font-size: 2.5em;
+        margin: 30px 0;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      }
+      .motivational-carousel {
+        position: relative;
+        width: 300px;
+        height: 300px;
+        margin: 20px auto;
+        overflow: hidden;
+        perspective: 1000px;
+        touch-action: pan-y;
+        background: linear-gradient(135deg, #000428, #004e92);
+        padding: 20px;
+        border-radius: 35px;
+        border: 3px solid #000;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+      }
+      .motivational-carousel img {
+        position: absolute;
+        width: calc(100% - 40px);
+        height: calc(100% - 40px);
+        object-fit: contain;
+        border-radius: 25px;
+        transition: all 0.8s ease;
+        opacity: 0;
+        transform: translateX(100%) rotateY(-15deg);
+        background: white;
+        padding: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      }
+      .motivational-carousel img.active {
+        opacity: 1;
+        transform: translateX(0) rotateY(0deg);
+      }
+      .motivational-carousel img.active:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      }
+      .motivational-carousel img.exit {
+        opacity: 0;
+        transform: translateX(-100%) rotateY(15deg);
+      }
+
+      /* Desktop Layout Adjustments for Carousel */
+      @media only screen and (min-width: 1024px) {
+        .motivational-carousel {
+          width: 90%;
+          max-width: 1200px;
+          height: auto;
+          display: flex;
+          justify-content: space-between;
+          gap: 20px;
+          perspective: none;
+        }
+        .motivational-carousel img {
+          position: static;
+          width: calc(20% - 16px);
+          height: 200px;
+          border-radius: 25px;
+          opacity: 1;
+          transform: none;
+          transition: transform 0.3s ease;
+        }
+        .motivational-carousel img:hover {
+          transform: translateY(-10px);
+        }
+        .carousel-buttons {
+          display: none;
+        }
+      }
+
+      /* Carousel Buttons */
+      .carousel-buttons {
+        margin: 10px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+      }
+      .carousel-buttons .carousel-btn {
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        border-radius: 50%;
+      }
+
+      /* Contract Address Section */
+      .contract-address-section {
+        margin-top: 20px;
+        text-align: center;
+      }
+      .contract-address-section h2 {
+        margin-bottom: 10px;
+        font-size: 2em;
+      }
+      .white-box {
+        display: inline-block;
+        background-color: #fff;
+        color: #000;
+        padding: 15px 20px;
+        border-radius: 10px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        position: relative;
+      }
+      .ca-abbreviation {
+        font-weight: bold;
+        margin-right: 10px;
+        font-size: 1.2em;
+      }
+      .contract-address {
+        font-size: 1em;
+        word-wrap: break-word;
+        word-break: break-all;
+      }
+      .copy-icon, .checkmark-icon {
+        width: 24px;
+        height: 24px;
+        margin-left: 10px;
+        cursor: pointer;
+        vertical-align: middle;
+        transition: opacity 0.3s ease;
+      }
+      .checkmark-icon {
+        display: none;
+      }
+      .checkmark-icon.fade-out {
+        animation: fadeOut 1s ease forwards;
+      }
+
+      /* Roadmap Section */
+      .roadmap {
+        background: #FBF4E1;
+        color: #000;
+        border-radius: 50px;
+        padding: 25px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      }
+      .roadmap h2 {
+        color: #222;
+      }
+
+      /* Fun Fact Section */
+      .fun-fact-inline {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 40px auto;
+      }
+      .fun-fact-char {
+        width: 260px;
+        margin-bottom: 20px;
+      }
+      .fun-fact-text {
+        color: #000;
+        max-width: 600px;
+        text-align: center;
+        border: 3px solid black;
+        border-radius: 5px;
+        padding: 20px;
+        background: linear-gradient(135deg, #ff8c00, #ffd700);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      }
+      .fun-fact-text h2 {
+        margin-top: 0;
+        font-size: 2.5em;
+        text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+      }
+      .fun-fact-text h2 .pawprint {
+        width: 40px;
+        vertical-align: middle;
+        margin-left: 10px;
+      }
+      .fun-fact-text p {
+        font-size: 1.2em;
+        line-height: 1.4;
+      }
+
+      /* DIAGONAL Tokenomics Section */
+      .diagonal-border {
+        position: relative;
+        margin: 40px auto;
+        max-width: 1200px;
+      }
+      .diagonal-border::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        border: 2px solid silver;
+        clip-path: polygon(0 5%, 100% 0, 100% 95%, 0 100%);
+      }
+      .tokenomics-section {
+        background: linear-gradient(135deg, #000428, #004e92);
+        color: #fff;
+        padding: 35px;
+        text-align: center;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        position: relative;
+        z-index: 1;
+        clip-path: polygon(0 5%, 100% 0, 100% 95%, 0 100%);
+        border: 3px solid #000;
+      }
+      .tokenomics-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at top right, rgba(255,140,0,0.1) 0%, transparent 70%);
+        pointer-events: none;
+      }
+      .tokenomics-section h2 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+      }
+      .tokenomics-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 auto;
+        max-width: 600px;
+        text-align: left;
+      }
+      .tokenomics-list li {
+        margin: 10px 0;
+        font-size: 1.2em;
+      }
+
+      /* DIAGONAL EXCHANGE TICKER */
+      .diagonal-exchange {
+        position: relative;
+        margin: 40px auto;
+        max-width: 1000px;
+        clip-path: polygon(0 8%, 100% 0, 100% 92%, 0 100%);
+        background: #000;
+      }
+      .diagonal-exchange::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 2px solid silver;
+        clip-path: polygon(0 8%, 100% 0, 100% 92%, 0 100%);
+        pointer-events: none;
+      }
+      .exchange-inner {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        padding: 20px;
+        min-height: 180px;
+      }
+      .exchange-inner h2 {
+        margin-bottom: 10px;
+        color: #fff;
+      }
+      .exchange-ticker {
+        position: relative;
+        overflow: hidden;
+        width: 80%;
+        margin: 0 auto;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .exchange-track {
+        display: flex;
+        align-items: center;
+        animation: scrollExchanges 14s linear infinite;
+      }
+      .exchange-item {
+        flex: 0 0 auto;
+        margin: 0 30px;
+        text-align: center;
+        position: relative;
+      }
+      .exchange-item img {
+        height: 50px;
+        width: auto;
+        filter: blur(0px);
+      }
+      .coming-soon {
+        font-size: 0.8em;
+        color: #ff8c00;
+        margin-top: 5px;
+      }
+      @keyframes scrollExchanges {
+        0%   { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+
+      /* White & Black Sections */
+      .white-section,
+      .black-section {
+        border-radius: 50px;
+        padding: 25px;
+        text-align: center;
+        margin-bottom: 40px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        animation: fadeInUp 1s ease-out 0.5s;
+        animation-fill-mode: forwards;
+      }
+      .white-section {
+        background: linear-gradient(135deg, #ffffff, #f5f5f5);
+        color: #000000;
+        border: 3px solid #000;
+        position: relative;
+        overflow: hidden;
+      }
+      .white-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at top right, rgba(0,78,146,0.05) 0%, transparent 70%);
+        pointer-events: none;
+      }
+      .black-section {
+        background: linear-gradient(135deg, #000428, #004e92);
+        color: #ffffff;
+        border: 3px solid #000;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Social Icons */
+      .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 20px;
+      }
+      .social-icons a img {
+        width: 40px;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+      }
+      .social-icons a img:hover {
+        transform: scale(1.2);
+      }
+
+      /* Community Section */
+      .community {
+        text-align: center;
+        padding: 25px;
+        border-radius: 50px;
+        background: rgba(0,0,0,0.7);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      }
+
+      /* Footer */
+      footer {
+        background: rgba(0, 0, 0, 0.8);
+        text-align: center;
+        padding: 10px 0;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        border-top: 2px solid rgba(255,255,255,0.3);
+      }
+      footer p {
+        margin: 0;
+        color: #ccc;
+        font-size: 0.9em;
+      }
+
+      .cta-button {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 15px 30px;
+        background: #e74c3c;
+        color: white;
+        text-transform: uppercase;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+      }
+      .cta-button:hover {
+        background: #c0392b;
+      }
+
+      /* "How to Buy" Blocks */
+      h2#how-to-buy {
+        text-align: center;
+        margin: 40px 0 20px;
+      }
+      .htb-block-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-bottom: 20px;
+        align-items: center;
+      }
+      .htb-block {
+        display: flex;
+        align-items: center;
+        background: #fbf4e1;
+        color: #000000;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        width: 95%;
+        max-width: 700px;
+        position: relative;
+        overflow: visible;
+        clip-path: polygon(0 3%, 100% 0, 100% 97%, 0 100%);
+        border: 3px solid #000;
+        transition: transform 0.3s ease;
+      }
+      .htb-block:hover {
+        transform: translateY(-5px);
+        animation: pushInOut 0.4s ease-in-out;
+      }
+      .htb-icon {
+        flex-shrink: 0;
+        margin-right: 15px;
+      }
+      .htb-icon img {
+        width: 50px;
+        height: 50px;
+      }
+      .htb-info h3 {
+        margin: 0 0 8px;
+        font-size: 1.2em;
+      }
+      .htb-info p {
+        margin: 0;
+        font-size: 1em;
+        line-height: 1.4;
+        white-space: normal;
+      }
+      .htb-block:nth-child(even) {
+        flex-direction: row-reverse;
+      }
+      .htb-block:nth-child(even) .htb-icon {
+        margin-right: 0;
+        margin-left: 15px;
+      }
+
+      /* Phantom Button */
+      .phantom-button {
+        display: block;
+        margin: 10px 0 0 0;
+        background: #8C49FF;
+        border: 3px solid #000;
+        color: #000;
+        font-weight: bold;
+        font-size: 0.95em;
+        padding: 12px 30px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out;
+        position: relative;
+      }
+      .phantom-button::before {
+        content: "";
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        right: 6px;
+        bottom: 6px;
+        border: 2px solid #000;
+        border-radius: 10px;
+        pointer-events: none;
+      }
+      .phantom-button:hover {
+        animation: pushInOut 0.5s ease-in-out;
+      }
+
+      /* Final Step Block */
+      .final-step-block {
+        background: #fbf4e1;
+        color: #000000;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        width: 95%;
+        max-width: 700px;
+        margin: 0 auto 40px auto;
+        padding: 20px;
+        text-align: left;
+        border: 3px solid #000;
+      }
+      .final-step-block h3 {
+        font-size: 1em;
+        margin: 0 0 10px;
+      }
+      .final-swap-button {
+        display: block;
+        margin: 0 auto;
+        margin-top: 5px;
+        background: #ff8c00;
+        border: 3px solid #000;
+        color: #000;
+        font-weight: bold;
+        font-size: 0.95em;
+        padding: 12px 30px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out;
+        position: relative;
+      }
+      .final-swap-button::before {
+        content: "";
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        right: 6px;
+        bottom: 6px;
+        border: 2px solid #000;
+        border-radius: 10px;
+        pointer-events: none;
+      }
+      .final-swap-button:hover {
+        animation: pushInOut 0.5s ease-in-out;
+      }
+
+      /* Community Art Gallery */
+      .meme-box {
+        display: inline-block;
+        width: 150px;
+        margin: 0 8px;
+        vertical-align: middle;
+      }
+      .meme-box img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+      }
+      .meme-container {
+        display: inline-block;
+        width: 180px;
+        margin: 0 15px;
+        vertical-align: middle;
+        border: 3px solid #000;
+        border-radius: 25px;
+        padding: 15px;
+        background: linear-gradient(135deg, #000428, #004e92);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      }
+      .meme-container img {
+        width: 100%;
+        height: auto;
+        border-radius: 15px;
+        border: 2px solid #fff;
+      }
+
+      /* Achievement System */
+      .achievements {
+        text-align: center;
+      }
+      .achievement-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        padding: 20px;
+      }
+      .achievement-card {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        padding: 20px;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 2px solid rgba(255, 215, 0, 0.3);
+      }
+      .achievement-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+      }
+      .achievement-icon {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+      }
+      .achievement-card h3 {
+        color: #ffd700;
+        margin: 10px 0;
+      }
+      .achievement-card p {
+        color: #ccc;
+        font-size: 0.9em;
+      }
+      .progress-bar {
+        background: rgba(255, 255, 255, 0.1);
+        height: 10px;
+        border-radius: 5px;
+        margin-top: 15px;
+        overflow: hidden;
+      }
+      .progress {
+        background: linear-gradient(90deg, #ff8c00, #ffd700);
+        height: 100%;
+        width: 0%;
+        transition: width 0.5s ease;
+      }
+      .achievement-unlocked {
+        border-color: #ffd700;
+        background: rgba(255, 215, 0, 0.1);
+      }
+      .achievement-unlocked .progress {
+        width: 100% !important;
+      }
+
+      /* Desktop Layout Adjustments */
+      @media only screen and (min-width: 1024px) {
+        header h1 {
+          font-size: 4em;
+        }
+        header p {
+          font-size: 1.5em;
+        }
+        .section {
+          padding: 40px;
+          margin-bottom: 60px;
+        }
+        .section h2 {
+          font-size: 3em;
+        }
+        .character img {
+          width: 180px;
+        }
+        .social-icons a img {
+          width: 50px;
+        }
+        .container > .section:not(:last-child) {
+          margin-bottom: 60px;
+        }
+        .tokenomics-list li {
+          font-size: 1.3em;
+        }
+        .fun-fact-char {
+          width: 300px;
+        }
+      }
+      .stars-container {
+        text-align: center;
+        margin-top: 10px;
+      }
+      .stars-container svg polygon {
+        fill: silver;
+        stroke: #666;
+        stroke-width: 0.5;
+      }
+
+      /* Motivation Analyzer Styles */
+      #motivation-analyzer {
+        background: linear-gradient(135deg, #ff8c00, #ffd700);
+        color: #000;
+        border-radius: 50px;
+        padding: 40px;
+        text-align: center;
+        margin: 40px auto;
+        max-width: 800px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      }
+      #motivation-analyzer h2 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+      }
+      #input-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+      }
+      #motivation-input {
+        width: 100%;
+        max-width: 600px;
+        padding: 15px;
+        border-radius: 10px;
+        border: 2px solid #000;
+        font-size: 1.2em;
+        font-family: 'Luckiest Guy', cursive;
+        color: #000;
+        background: #fff;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      }
+      #motivation-input::placeholder {
+        color: #888;
+      }
+      #submit-motivation {
+        background: #000;
+        color: #fff;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 10px;
+        font-size: 1.2em;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      }
+      #submit-motivation:hover {
+        background: #004e92;
+      }
+      #loading-animation {
+        display: none;
+        text-align: center;
+        padding: 20px;
+      }
+      .spinner {
+        border: 8px solid #f3f3f3;
+        border-top: 8px solid #ff8c00;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 2s linear infinite;
+        margin: 0 auto 10px;
+      }
+      #results {
+        display: none;
+        background: linear-gradient(135deg, #ffffff, #f5f5f5);
+        border-radius: 15px;
+        border: 2px solid #000;
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      }
+      #results p {
+        font-size: 1.2em;
+        margin: 10px 0;
+      }
+      #results button {
+        margin: 10px 5px;
+        padding: 10px 20px;
+        background: #000;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-family: 'Luckiest Guy', cursive;
+      }
+      #results button:hover {
+        background: #004e92;
+        transform: translateY(-2px);
+      }
+      .chasecat-response {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        margin: 20px 0;
+      }
+      .logo-appear {
+        width: 100px;
+        height: auto;
+        border-radius: 50%;
+        border: 2px solid #ffd700;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        animation: fadeIn 1s ease-in;
+      }
+      .progress-container {
+        width: 100%;
+        max-width: 400px;
+        height: 20px;
+        background: #eee;
+        border-radius: 10px;
+        overflow: hidden;
+        margin: 20px auto;
+      }
+      .progress-bar {
+        height: 100%;
+        background: #ff8c00;
+        transition: width 0.5s ease;
+      }
+
+      /* Mobile Adjustments for Motivation Analyzer */
+      @media only screen and (max-width: 768px) {
+        #motivation-analyzer {
+          padding: 20px;
+          margin: 20px auto;
+          max-width: 100%;
+        }
+        #motivation-analyzer h2 {
+          font-size: 1.8em;
+          margin-bottom: 15px;
+        }
+        #input-section {
+          gap: 10px;
+        }
+        #motivation-input {
+          max-width: 100%;
+          font-size: 1em;
+          padding: 10px;
+          rows: 3;
+        }
+        #submit-motivation {
+          padding: 10px 20px;
+          font-size: 1em;
+        }
+        #results {
+          padding: 15px;
+          margin: 15px auto;
+        }
+        #results p {
+          font-size: 1em;
+        }
+        .chasecat-response {
+          flex-direction: column;
+          gap: 10px;
+          margin: 15px 0;
+        }
+        .logo-appear {
+          width: 80px;
+        }
+        .progress-container {
+          max-width: 300px;
+          height: 15px;
+          margin: 15px auto;
+        }
+        #results button {
+          padding: 8px 15px;
+          font-size: 0.9em;
+        }
+      }
+
+      /* Social Icon Containers */
+      .social-icon-container {
+        background: linear-gradient(135deg, #ff8c00, #ffd700);
+        border-radius: 50%;
+        padding: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        transition: transform 0.3s ease;
+      }
+
+      .social-icon-container img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+      }
+
+      .social-icon-container:hover {
+        transform: scale(1.1);
+      }
+
+      /* Desktop Menu Styles */
+      .desktop-menu {
+        display: none; /* Hidden by default for mobile */
+        gap: 20px;
+      }
+
+      .desktop-menu a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 1.2em;
+        padding: 10px 15px;
+        border-radius: 10px;
+        transition: background 0.3s ease;
+      }
+
+      .desktop-menu a:hover {
+        background: linear-gradient(135deg, #ff8c00, #ffd700);
+        color: #000;
+      }
+
+      /* Adjust Top Menu Container Layout for Desktop */
+      @media only screen and (min-width: 1024px) {
+        .top-menu-container {
+          justify-content: space-between;
+          align-items: center;
+          flex-wrap: wrap;
+        }
+
+        /* Hide Mobile Menu for Desktop */
+        .menu-container {
+          display: none;
+        }
+
+        /* Show Desktop Menu */
+        .desktop-menu {
+          display: flex;
+          justify-content: flex-start;
+          flex-grow: 1;
+        }
+
+        /* Center Social Icons in the Middle */
+        .social-icons.desktop-socials {
+          display: flex;
+          justify-content: center;
+          gap: 15px;
+          flex-grow: 1;
+          order: 2; /* Ensures social icons appear between menu and eBook button */
+        }
+
+        /* Ensure eBook Button Stays on Right */
+        .ebook-button {
+          order: 3;
+        }
+
+        /* Hide Bottom Social Icons for Desktop */
+        #socials {
+          display: none;
+        }
+      }
+
+      /* Keep Bottom Social Icons for Mobile */
+      @media only screen and (max-width: 1023px) {
+        .social-icons.desktop-socials {
+          display: none; /* Hide social icons in menu for mobile */
+        }
+        .desktop-menu {
+          display: none; /* Hide desktop menu for mobile */
+        }
+      }
+
+      /* Relative Navigation Bar */
+      .navigation-bar {
+        position: relative;
+        width: 100%;
+      }
+
+      /* Achievements Section Styles */
+      .achievements-section {
+        padding: 40px 20px;
+      }
+
+      .achievements-section h2 {
+        text-align: center;
+        color: #ffd700;
+        margin-bottom: 30px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      .achievements-section > div {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+      }
+
+      .achievement-card {
+        background: rgba(0, 4, 40, 0.9);
+        border: 2px solid rgba(255, 215, 0, 0.3);
+        border-radius: 15px;
+        padding: 20px;
+        color: #fff;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .achievement-card div {
+        margin-bottom: 10px;
+      }
+
+      .achievement-card h3 {
+        color: #ffd700;
+        margin: 0;
+      }
+
+      .achievement-card p {
+        margin: 0;
+        font-size: 0.9em;
+      }
+
+      .progress-bar {
+        background: rgba(255, 255, 255, 0.1);
+        height: 8px;
+        border-radius: 4px;
+        overflow: hidden;
+      }
+
+      .progress {
+        height: 100%;
+        background: linear-gradient(90deg, #ff8c00, #ffd700);
+      }
+
+      @media (min-width: 640px) {
+        .achievements-section > div {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .achievements-section > div {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <nav class="navigation-bar">
+        <div class="top-menu-container">
+          <!-- Mobile Menu Button and Dropdown -->
+          <div class="menu-container">
+            <button class="menu-button" onclick="toggleDropdown()"><span></span></button>
+            <div class="dropdown-menu">
+              <a href="#about">About</a>
+              <a href="#roadmap">Roadmap</a>
+              <a href="#tokenomics">Tokenomics</a>
+              <a href="#motivation-analyzer">Analyzer</a>
+            </div>
+          </div>
+          <!-- Desktop Menu Items -->
+          <div class="desktop-menu">
+            <a href="#about">ABOUT</a>
+            <a href="#roadmap">ROADMAP</a>
+            <a href="#tokenomics">TOKENOMICS</a>
+            <a href="#motivation-analyzer">ANALYZER</a>
+          </div>
+          <!-- Social Icons (Moved from Bottom for Desktop) -->
+          <div class="social-icons desktop-socials">
+            <a href="https://dexscreener.com" target="_blank">
+              <div class="social-icon-container">
+                <img src="dexscreener.png" alt="Dexscreener" />
+              </div>
+            </a>
+            <a href="https://pump.fun" target="_blank">
+              <div class="social-icon-container">
+                <img src="pumpfun.png" alt="Pump.fun" />
+              </div>
+            </a>
+            <a href="https://tinyurl.com/5ybcbf29" target="_blank">
+              <div class="social-icon-container">
+                <img src="x.png" alt="X (Twitter)" />
+              </div>
+            </a>
+            <a href="https://t.me/+9kryXOWNfao0YzI0" target="_blank">
+              <div class="social-icon-container">
+                <img src="telegram.png" alt="Telegram" />
+              </div>
+            </a>
+          </div>
+          <!-- Buy eBook Button -->
+          <a href="Payments.html" class="ebook-button">Buy eBook</a>
+        </div>
+      </nav>
+      <h1 data-text="$Chasecat Token">$Chasecat Token</h1>
+      <p>"Motivation Meets Memecoin - Lead with Inspiration."</p>
+      <div class="buy-container">
+        <a href="https://raydium.io/swap" target="_blank" class="buy-button">Buy Token</a>
+      </div>
+    </header>
+    <!-- Marquee Announcement -->
+    <div class="marquee-container">
+      <marquee behavior="scroll" direction="left" scrollamount="5">
+        Announcing: The ChaseCat ebook is available! Buy it now for only $1.20!
+      </marquee>
+    </div>
+
+    <!-- Motivational Carousel -->
+    <h2 class="motivation-title">Motivation</h2>
+    <div class="motivational-carousel">
+      <img src="motivational1.png" alt="Motivation 1" class="active" />
+      <img src="motivational2.png" alt="Motivation 2" />
+      <img src="motivational3.png" alt="Motivation 3" />
+      <img src="motivational4.png" alt="Motivation 4" />
+      <img src="motivational5.png" alt="Motivation 5" />
+    </div>
+    <div class="carousel-buttons">
+      <img src="leftbutton.png" alt="Previous" class="carousel-btn left" />
+      <img src="rightbutton.png" alt="Next" class="carousel-btn right" />
+    </div>
+
+    <!-- Contract Address Section -->
+    <div class="container" style="background: linear-gradient(135deg, #ffffff, #f5f5f5); border: 3px solid #000; box-shadow: 0 8px 20px rgba(0,0,0,0.1);">
+      <div class="contract-address-section">
+        <h2 style="color: #000;">Contract Address</h2>
+        <div class="white-box" style="background: linear-gradient(135deg, #ff8c00, #ffd700); border: 3px solid #000;">
+          <span class="ca-abbreviation">CA:</span>
+          <span class="contract-address" style="color: #000;">
+            HKmBnM1ErJjCk1jtvtRDE9sWnDizXeqLCxrMove5CfUS
+          </span>
+          <img
+            src="svg.png"
+            alt="Copy Address"
+            class="copy-icon"
+            onclick="copyAddress()"
+          />
+          <img
+            src="checkmark.png"
+            alt="Copied"
+            class="checkmark-icon"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- About Section -->
+    <div class="section" id="about" style="background: linear-gradient(135deg, #ff8c00, #ffd700); color: #000;">
+      <h2>About</h2>
+      <div class="stars-container">
+        <svg width="200" height="40" viewBox="0 0 200 40">
+          <polygon points="20,2 25,15 38,15 27,23 32,37 20,29 8,37 13,23 2,15 15,15" style="transform: translateX(0px)" />
+          <polygon points="20,2 25,15 38,15 27,23 32,37 20,29 8,37 13,23 2,15 15,15" style="transform: translateX(40px)" />
+          <polygon points="20,2 25,15 38,15 27,23 32,37 20,29 8,37 13,23 2,15 15,15" style="transform: translateX(80px)" />
+          <polygon points="20,2 25,15 38,15 27,23 32,37 20,29 8,37 13,23 2,15 15,15" style="transform: translateX(120px)" />
+          <polygon points="20,2 25,15 38,15 27,23 32,37 20,29 8,37 13,23 2,15 15,15" style="transform: translateX(160px)" />
+        </svg>
+      </div>
+      <p>
+        ChaseCat is a meme character that's all about relentless ambition and unstoppable drive. His whole vibe is about never giving up—he's genuine, heartfelt, and always there to remind you that every setback is just a setup for a comeback.
+      </p>
+    </div>
+
+    <!-- Meet the Legend Section -->
+    <div class="section" id="legend" style="background: linear-gradient(135deg, #000428, #004e92); color: #fff; border: 3px solid #ffd700;">
+      <h2 style="color: #ffd700; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Meet the Legend</h2>
+      <div class="characters">
+        <div class="character" style="background: linear-gradient(145deg, #000428, #004e92); padding: 20px; border-radius: 15px; border: 2px solid #ffd700; box-shadow: 0 4px 15px rgba(255,215,0,0.1);">
+          <img src="chasecat.png" alt="Chasecat" style="border: 3px solid #ffd700;" />
+          <h3 style="color: #ffd700;">Chasecat</h3>
+          <p>
+            I am ChaseCat—relentless, ambitious, and driven by the pursuit of
+            success. I inspire you to rise, hustle, and chase your dreams without
+            compromise.
+          </p>
+        </div>
+        <div class="character">
+          <h3>-Chasecat mindset-</h3>
+          <p>
+            Wake up. No one is coming to hand you success. Get ruthless about your future. 
+            Chase it. Take it. Own it. That's the ChaseCat way.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fun Fact Section -->
+    <div id="funfact" class="fun-fact-inline" style="margin: 40px auto;">
+      <img src="funfact.png" alt="Fun Fact Character" class="fun-fact-char" />
+      <div class="fun-fact-text">
+        <h2>
+          Fun Fact
+          <img src="pawprint.png" alt="Paw Print" class="pawprint" />
+        </h2>
+        <p>
+          -ChaseCat's motto: "Keep chasing!"<br>
+          -He stands for resilience, ambition, and never giving up.<br>
+          ChaseCat is a character that represents the hustle. No matter the obstacles, he keeps moving forward, proving that success is earned through focus, determination, and an unstoppable mindset.
+        </p>
+      </div>
+    </div>
+
+    <!-- Motivation Analyzer Section -->
+    <div class="section" id="motivation-analyzer" style="background: linear-gradient(135deg, #ff8c00, #ffd700); color: #000; border: 3px solid #000; margin: 40px auto; max-width: 800px; padding: 40px; border-radius: 50px; box-shadow: 0 8px 20px rgba(0,0,0,0.1);">
+      <h2>Share Your Motivation</h2>
+      <div id="input-section" style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+        <label for="motivation-input" style="font-size: 1.5em; color: #000; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">Write your motivation here:</label>
+        <textarea id="motivation-input" rows="4" maxlength="500" placeholder="Type your motivational message here..." style="width: 100%; max-width: 600px; padding: 15px; border-radius: 10px; border: 2px solid #000; font-size: 1.2em; font-family: 'Luckiest Guy', cursive; color: #000; background: #fff; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"></textarea>
+        <button id="submit-motivation" style="background: #000; color: #fff; padding: 15px 30px; border: none; border-radius: 10px; font-size: 1.2em; cursor: pointer; transition: background 0.3s ease; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">Analyze</button>
+      </div>
+      <div id="loading-animation" style="display: none; text-align: center; padding: 20px;">
+        <div class="spinner"></div>
+        <p>Analyzing your motivation...</p>
+      </div>
+      <div id="results" style="display: none; background: linear-gradient(135deg, #ffffff, #f5f5f5); border-radius: 15px; border: 2px solid #000; max-width: 600px; margin: 20px auto; padding: 20px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"></div>
+    </div>
+
+    <!-- Roadmap Section -->
+    <div class="section roadmap" id="roadmap" style="margin: 40px auto; max-width: 1200px; background: #fbf4e1;">
+      <h2>Roadmap</h2>
+      <p>
+        <strong>Phase 1:</strong> Launch on Pump.fun, build a strong community.<br />
+        <strong>Phase 2:</strong> Collaborate with influencers in the crypto and meme communities.<br />
+        <strong>Phase 3:</strong> Expand to partnerships, merchandise, and major exchange listings.
+      </p>
+    </div>
+
+    <!-- Community Art Gallery -->
+    <h2 style="text-align:center;">Community Art Gallery</h2>
+    <marquee
+      behavior="scroll"
+      direction="left"
+      scrollamount="8"
+      style="white-space: nowrap;"
+      onmouseover="this.stop();"
+      onmouseout="this.start();"
+    >
+      <div class="meme-container">
+        <img src="meme1.png" alt="Meme 1" />
+      </div>
+      <div class="meme-container">
+        <img src="meme2.png" alt="Meme 2" />
+      </div>
+      <div class="meme-container">
+        <img src="meme3.png" alt="Meme 3" />
+      </div>
+      <div class="meme-container">
+        <img src="meme4.png" alt="Meme 4" />
+      </div>
+      <div class="meme-container">
+        <img src="meme5.png" alt="Meme 5" />
+      </div>
+    </marquee>
+
+    <!-- DIAGONAL TOKENOMICS SECTION -->
+    <div class="diagonal-border" id="tokenomics">
+      <div class="tokenomics-section">
+        <h2>Tokenomics ⚖️</h2>
+        <p>
+          Our fair and transparent distribution fuels community growth and long-term success.
+        </p>
+        <ul class="tokenomics-list">
+          <li>Total Supply: 1,000,000,000 🐱</li>
+          <li>LP: Burnt 🔥</li>
+          <li>Ticker: $CHASECAT</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- HOW TO BUY SECTION -->
+    <h2 id="how-to-buy" style="text-align:center;">How to Buy ChaseCat Token</h2>
+    <div class="htb-block-container">
+      <!-- Block 1 -->
+      <div class="htb-block">
+        <div class="htb-icon">
+          <img src="phantom.png" alt="Wallet Icon" />
+        </div>
+        <div class="htb-info">
+          <h3>1. Download Phantom Wallet</h3>
+          <p>
+            Download and set up the <strong>Phantom Wallet</strong> from the
+            official website or app store.
+          </p>
+          <button
+            class="phantom-button"
+            onclick="window.open('https://phantom.app/download','_blank')"
+          >
+            DOWNLOAD PHANTOM
+          </button>
+        </div>
+      </div>
+
+      <!-- Block 2 -->
+      <div class="htb-block">
+        <div class="htb-icon">
+          <img src="solana.png" alt="Solana Icon" />
+        </div>
+        <div class="htb-info">
+          <h3>2. Transfer SOL</h3>
+          <p>
+            Transfer some Solana (SOL) into your Phantom Wallet to cover gas
+            fees.
+          </p>
+        </div>
+      </div>
+
+      <!-- Block 3 -->
+      <div class="htb-block">
+        <div class="htb-icon">
+          <img src="raydium.png" alt="DEX Icon" />
+        </div>
+        <div class="htb-info">
+          <h3>3. Connect to a DEX</h3>
+          <p>
+            Visit a trusted DEX like
+            <a href="https://raydium.io" target="_blank">Raydium</a> or
+            <a href="https://orca.so" target="_blank">Orca</a>, then connect
+            your Phantom Wallet.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final Step #4 -->
+    <div class="final-step-block">
+      <h3>
+        4. Swap for $ChaseCat – Swap your SOL or other tokens for ChaseCat,
+        then confirm the transaction in Phantom. Enjoy your new tokens!
+      </h3>
+      <button class="final-swap-button" onclick="window.open('https://jup.ag','_blank')">
+        SWAP NOW
+      </button>
+    </div>
+
+    <!-- DIAGONAL EXCHANGE TICKER -->
+    <div class="diagonal-exchange" id="exchanges">
+      <div class="exchange-inner">
+        <h2>Exchanges (Coming Soon)</h2>
+        <div class="exchange-ticker">
+          <div class="exchange-track">
+            <div class="exchange-item">
+              <img src="binace.png" alt="Binance" />
+              <p class="coming-soon">Coming Soon</p>
+            </div>
+            <div class="exchange-item">
+              <img src="bybit.png" alt="Bybit" />
+              <p class="coming-soon">Coming Soon</p>
+            </div>
+            <div class="exchange-item">
+              <img src="mexc.png" alt="MEXC" />
+              <p class="coming-soon">Coming Soon</p>
+            </div>
+            <div class="exchange-item">
+              <img src="bitget.png" alt="Bitget" />
+              <p class="coming-soon">Coming Soon</p>
+            </div>
+            <div class="exchange-item">
+              <img src="binace.png" alt="Binance" />
+              <p class="coming-soon">Coming Soon</p>
+            </div>
+            <div class="exchange-item">
+              <img src="bybit.png" alt="Bybit" />
+              <p class="coming-soon">Coming Soon</p>
+            </div>
+            <div class="exchange-item">
+              <img src="mexc.png" alt="MEXC" />
+              <p class="coming-soon">Coming Soon</p>
+            </div>
+            <div class="exchange-item">
+              <img src="bitget.png" alt="Bitget" />
+              <p class="coming-soon">Coming Soon</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Social Icons (For Mobile) -->
+    <div class="social-icons" id="socials">
+      <a href="https://dexscreener.com" target="_blank">
+        <img src="dexscreener.png" alt="Dexscreener" />
+      </a>
+      <a href="https://pump.fun" target="_blank">
+        <img src="pumpfun.png" alt="Pump.fun" />
+      </a>
+      <a href="https://tinyurl.com/5ybcbf29" target="_blank">
+        <img src="x.png" alt="X (Twitter)" />
+      </a>
+      <a href="https://t.me/+9kryXOWNfao0YzI0" target="_blank">
+        <img src="telegram.png" alt="Telegram" />
+      </a>
+    </div>
+
+    <!-- Achievement System -->
+    <div class="achievements-section" style="padding: 40px 20px;">
+      <h2 style="text-align: center; color: #ffd700; margin-bottom: 30px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">ChaseCat Achievements 🏆</h2>
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 900px; margin: 0 auto;">
+        <div class="achievement-card" onclick="unlockAchievement(0)" style="background: rgba(0, 4, 40, 0.9); border: 2px solid rgba(255, 215, 0, 0.3); border-radius: 15px; padding: 20px; color: #fff; cursor: pointer; transition: transform 0.3s ease;">
+          <div style="font-size: 2em; margin-bottom: 10px;">🌟</div>
+          <h3 style="color: #ffd700; margin: 0 0 10px 0;">Early Adopter</h3>
+          <p style="margin: 0 0 15px 0;">Join the ChaseCat community</p>
+          <div style="background: rgba(255, 255, 255, 0.1); height: 8px; border-radius: 4px; overflow: hidden;">
+            <div class="progress" style="width: 0%; height: 100%; background: linear-gradient(90deg, #ff8c00, #ffd700);"></div>
+          </div>
+        </div>
+        <div class="achievement-card" onclick="unlockAchievement(1)" style="background: rgba(0, 4, 40, 0.9); border: 2px solid rgba(255, 215, 0, 0.3); border-radius: 15px; padding: 20px; color: #fff; cursor: pointer; transition: transform 0.3s ease;">
+          <div style="font-size: 2em; margin-bottom: 10px;">📚</div>
+          <h3 style="color: #ffd700; margin: 0 0 10px 0;">Knowledge Seeker</h3>
+          <p style="margin: 0 0 15px 0;">Purchase the ChaseCat eBook</p>
+          <div style="background: rgba(255, 255, 255, 0.1); height: 8px; border-radius: 4px; overflow: hidden;">
+            <div class="progress" style="width: 0%; height: 100%; background: linear-gradient(90deg, #ff8c00, #ffd700);"></div>
+          </div>
+        </div>
+        <div class="achievement-card" onclick="unlockAchievement(2)" style="background: rgba(0, 4, 40, 0.9); border: 2px solid rgba(255, 215, 0, 0.3); border-radius: 15px; padding: 20px; color: #fff; cursor: pointer; transition: transform 0.3s ease;">
+          <div style="font-size: 2em; margin-bottom: 10px;">🎯</div>
+          <h3 style="color: #ffd700; margin: 0 0 10px 0;">Goal Setter</h3>
+          <p style="margin: 0 0 15px 0;">Share your first motivation</p>
+          <div style="background: rgba(255, 255, 255, 0.1); height: 8px; border-radius: 4px; overflow: hidden;">
+            <div class="progress" style="width: 0%; height: 100%; background: linear-gradient(90deg, #ff8c00, #ffd700);"></div>
+          </div>
+        </div>
+        <div class="achievement-card" onclick="unlockAchievement(3)" style="background: rgba(0, 4, 40, 0.9); border: 2px solid rgba(255, 215, 0, 0.3); border-radius: 15px; padding: 20px; color: #fff; cursor: pointer; transition: transform 0.3s ease;">
+          <div style="font-size: 2em; margin-bottom: 10px;">💎</div>
+          <h3 style="color: #ffd700; margin: 0 0 10px 0;">Diamond Hands</h3>
+          <p style="margin: 0 0 15px 0;">Hold ChaseCat tokens</p>
+          <div style="background: rgba(255, 255, 255, 0.1); height: 8px; border-radius: 4px; overflow: hidden;">
+            <div class="progress" style="width: 0%; height: 100%; background: linear-gradient(90deg, #ff8c00, #ffd700);"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      .achievements-section {
+        padding: 40px 20px;
+      }
+
+      .achievements-section h2 {
+        text-align: center;
+        color: #ffd700;
+        margin-bottom: 30px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      .achievements-section > div {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+      }
+
+      .achievement-card {
+        background: rgba(0, 4, 40, 0.9);
+        border: 2px solid rgba(255, 215, 0, 0.3);
+        border-radius: 15px;
+        padding: 20px;
+        color: #fff;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .achievement-card div {
+        margin-bottom: 10px;
+      }
+
+      .achievement-card h3 {
+        color: #ffd700;
+        margin: 0;
+      }
+
+      .achievement-card p {
+        margin: 0;
+        font-size: 0.9em;
+      }
+
+      .progress-bar {
+        background: rgba(255, 255, 255, 0.1);
+        height: 8px;
+        border-radius: 4px;
+        overflow: hidden;
+      }
+
+      .progress {
+        height: 100%;
+        background: linear-gradient(90deg, #ff8c00, #ffd700);
+      }
+
+      @media (min-width: 640px) {
+        .achievements-section > div {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .achievements-section > div {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+    </style>
+
+    <!-- Community Section -->
+    <div class="section community" id="community" style="background: linear-gradient(135deg, #ff8c00, #ffd700); color: #000; border: 3px solid #000; margin: 20px auto 50px; max-width: 1200px;">
+      <h2>Join the Community & Elevate Your Mindset!</h2>
+      <p>
+        Unlock motivation, joy, and financial wisdom with ChaseCat's fun book.
+        Laugh, learn, and take control of your future. Stay inspired—connect
+        with us on Telegram, TikTok, and beyond!
+      </p>
+      <a href="Payments.html" class="cta-button" style="background: linear-gradient(135deg, #000428, #004e92); border: 3px solid #000;">Buy Now</a>
+    </div>
+
+    <!-- Footer -->
+    <footer style="margin-top: 0;">
+      <p>© 2025 ChaseCat Token. All Rights Reserved. Built to inspire!</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+      // Achievement System
+      function unlockAchievement(index) {
+        const cards = document.querySelectorAll('.achievement-card');
+        const card = cards[index];
+
+        if (!card.classList.contains('achievement-unlocked')) {
+          card.classList.add('achievement-unlocked');
+
+          // Celebration effects
+          confetti({
+            particleCount: 50,
+            spread: 60,
+            origin: { y: 0.7 }
+          });
+
+          // Save achievement state
+          localStorage.setItem(`achievement_${index}`, 'unlocked');
+
+          // Show notification
+          const title = card.querySelector('h3').textContent;
+          const notification = document.createElement('div');
+          notification.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #ff8c00, #ffd700);
+            color: #000;
+            padding: 15px 25px;
+            border-radius: 10px;
+            animation: slideIn 0.5s ease-out;
+            z-index: 1000;
+            border: 2px solid #000;
+          `;
+          notification.innerHTML = `🏆 Achievement Unlocked: ${title}`;
+          document.body.appendChild(notification);
+
+          setTimeout(() => {
+            notification.style.animation = 'slideOut 0.5s ease-in';
+            setTimeout(() => notification.remove(), 500);
+          }, 3000);
+        }
+      }
+
+      // Load saved achievements
+      document.addEventListener('DOMContentLoaded', function() {
+        for (let i = 0; i < 4; i++) {
+          if (localStorage.getItem(`achievement_${i}`) === 'unlocked') {
+            unlockAchievement(i);
+          }
+        }
+      });
+
+      // Copy Contract Address with Checkmark Animation
+      function copyAddress() {
+        const address = document.querySelector('.contract-address').innerText;
+        const copyIcon = document.querySelector('.copy-icon');
+        const checkmarkIcon = document.querySelector('.checkmark-icon');
+
+        navigator.clipboard.writeText(address)
+          .then(() => {
+            copyIcon.style.display = 'none';
+            checkmarkIcon.style.display = 'inline';
+            checkmarkIcon.classList.add('fade-out');
+            setTimeout(() => {
+              checkmarkIcon.style.display = 'none';
+              copyIcon.style.display = 'inline';
+            }, 1000);
+          })
+          .catch(err => {
+            console.error('Error copying text: ', err);
+          });
+      }
+
+      // Toggle Dropdown Menu
+      function toggleDropdown() {
+        const menuBtn = document.querySelector('.menu-button');
+        const dropdown = document.querySelector('.dropdown-menu');
+        menuBtn.classList.toggle('active');
+        dropdown.classList.toggle('show');
+      }
+
+      // Responsive Carousel Initialization
+      document.addEventListener("DOMContentLoaded", function () {
+        const images = document.querySelectorAll(".motivational-carousel img");
+
+        if (window.innerWidth < 1024) {
+          let currentIndex = 0;
+          let startX = 0;
+          let isDragging = false;
+
+          function showImage(index) {
+            images.forEach((img, i) => {
+              img.classList.remove("active", "exit");
+              if (i === index) {
+                img.classList.add("active");
+              } else if (i < index) {
+                img.classList.add("exit");
+              }
+            });
+          }
+
+          function handleSwipe(newIndex) {
+            if (newIndex < 0) newIndex = images.length - 1;
+            if (newIndex >= images.length) newIndex = 0;
+            currentIndex = newIndex;
+            showImage(currentIndex);
+          }
+
+          const carousel = document.querySelector(".motivational-carousel");
+          carousel.addEventListener("touchstart", (e) => {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+          });
+
+          carousel.addEventListener("touchmove", (e) => {
+            if (!isDragging) return;
+            let diff = e.touches[0].clientX - startX;
+            if (Math.abs(diff) > 50) {
+              handleSwipe(diff < 0 ? currentIndex + 1 : currentIndex - 1);
+              isDragging = false;
+            }
+          });
+
+          carousel.addEventListener("touchend", () => {
+            isDragging = false;
+          });
+
+          const leftBtn = document.querySelector(".carousel-buttons .carousel-btn.left");
+          const rightBtn = document.querySelector(".carousel-buttons .carousel-btn.right");
+
+          leftBtn.addEventListener("click", () => {
+            handleSwipe(currentIndex - 1);
+          });
+
+          rightBtn.addEventListener("click", () => {
+            handleSwipe(currentIndex + 1);
+          });
+
+          showImage(currentIndex);
+        } else {
+          images.forEach(img => {
+            img.classList.add("active");
+          });
+        }
+      });
+
+      // Motivation Analyzer Functionality
+      const messages = {
+        emotional: [
+          "Wow, that’s a heartfelt motivation! Keep those emotions driving you forward!",
+          "Your emotional depth is inspiring! Let it fuel your journey."
+        ],
+        personal: [
+          "Your personal drive is inspiring! Stay focused on your goals!",
+          "Personal motivations are powerful! Keep pushing forward."
+        ],
+        'winning mentality': [
+          "You’ve got the champion’s mindset! Keep pushing for victory!",
+          "Winning mentality detected! You’re on the path to success."
+        ]
+      };
+
+      function analyzeMotivation(text) {
+        const words = text.toLowerCase().split(/\s+/).filter(word => word.length > 0);
+        if (words.length < 5) {
+          return { category: 'invalid', score: '0.00', message: 'Please write a longer motivation (at least 5 words).' };
+        }
+
+        const emotionalKeywords = ['love', 'passion', 'heart', 'feel', 'emotion', 'dream', 'hope'];
+        const personalKeywords = ['me', 'myself', 'i', 'my', 'goal', 'personal', 'life'];
+        const winningKeywords = ['win', 'success', 'top', 'best', 'champion', 'victory', 'achieve'];
+
+        let emotionalCount = 0, personalCount = 0, winningCount = 0;
+        words.forEach(word => {
+          if (emotionalKeywords.includes(word)) emotionalCount++;
+          if (personalKeywords.includes(word)) personalCount++;
+          if (winningKeywords.includes(word)) winningCount++;
+        });
+
+        const totalKeywords = emotionalCount + personalCount + winningCount;
+        if (totalKeywords === 0) {
+          return { category: 'general', score: '0.00', message: 'Your motivation is quite general. Try to be more specific!' };
+        }
+
+        const maxCount = Math.max(emotionalCount, personalCount, winningCount);
+        let category;
+        if (maxCount === emotionalCount && emotionalCount > 0) category = 'emotional';
+        else if (maxCount === personalCount && personalCount > 0) category = 'personal';
+        else category = 'winning mentality';
+
+        const score = (maxCount / words.length) * 100;
+        return { 
+          category, 
+          score: score.toFixed(2), 
+          message: `Your motivation is categorized as: <strong>${category}</strong><br>Score: ${score.toFixed(2)}%` 
+        };
+      }
+
+      document.getElementById('submit-motivation').addEventListener('click', () => {
+        const motivationText = document.getElementById('motivation-input').value.trim();
+        if (!motivationText) {
+          alert('Please enter your motivation!');
+          return;
+        }
+
+        document.getElementById('input-section').style.display = 'none';
+        document.getElementById('loading-animation').style.display = 'block';
+        document.getElementById('results').style.display = 'none';
+
+        setTimeout(() => {
+          document.getElementById('loading-animation').style.display = 'none';
+          const result = analyzeMotivation(motivationText);
+          const resultsDiv = document.getElementById('results');
+
+          let personalizedMessage = '';
+          if (result.category !== 'invalid' && result.category !== 'general') {
+            const categoryMessages = messages[result.category];
+            personalizedMessage = categoryMessages[Math.floor(Math.random() * categoryMessages.length)];
+          } else {
+            personalizedMessage = 'Keep working on your motivation!';
+          }
+
+          resultsDiv.innerHTML = `
+            <p>${result.message}</p>
+            <div class="chasecat-response">
+              <img src="chasecat-logo.png" alt="ChaseCat" class="logo-appear" />
+              <p>${personalizedMessage}</p>
+            </div>
+            <div class="progress-container">
+              <div class="progress-bar" style="width: 0%;"></div>
+            </div>
+            <button id="try-again">Try Again</button>
+            <button id="share-result">Share</button>
+          `;
+
+          resultsDiv.style.display = 'block';
+
+          // Animate progress bar
+          setTimeout(() => {
+            const progressBar = resultsDiv.querySelector('.progress-bar');
+            progressBar.style.width = `${result.score}%`;
+          }, 100);
+
+          // Add event listeners for buttons
+          document.getElementById('try-again').addEventListener('click', () => {
+            resultsDiv.style.display = 'none';
+            document.getElementById('input-section').style.display = 'flex';
+            document.getElementById('motivation-input').value = '';
+          });
+
+          document.getElementById('share-result').addEventListener('click', () => {
+            const shareText = `I just analyzed my motivation with ChaseCat Token! My motivation was categorized as ${result.category} with a score of ${result.score}%! Check it out at https://chasecat-token.com.`;
+            navigator.clipboard.writeText(shareText).then(() => {
+              alert('Result copied to clipboard!');
+            }).catch(err => {
+              console.error('Error copying text: ', err);
+              alert('Failed to copy. Please try again.');
+            });
+          });
+
+          if (result.category !== 'invalid' && result.category !== 'general') {
+            confetti({
+              particleCount: 100,
+              spread: 70,
+              origin: { y: 0.6 },
+              colors: ['#ff8c00', '#ffd700', '#ffffff']
+            });
+          }
+        }, 2000);
+      });
+    </script>
+  </body>
+</html>
