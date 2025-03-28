@@ -509,19 +509,19 @@
         margin-bottom: 20px;
       }
       .fun-fact-text {
-        color: #000;
+        color: #ffffff; /* White text to match the image */
         max-width: 600px;
         text-align: center;
-        border: 3px solid black;
+        border: 3px solid black; /* Matches the image's thin black border */
         border-radius: 5px;
         padding: 20px;
-        background: linear-gradient(135deg, #ff8c00, #ffd700);
+        background: #004e92; /* Solid dark blue background to match the image */
         box-shadow: 0 8px 20px rgba(0,0,0,0.1);
       }
       .fun-fact-text h2 {
         margin-top: 0;
         font-size: 2.5em;
-        text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        text-shadow: 2px 2px 5px rgba(0,0,0,0.5); /* Existing shadow matches the image */
       }
       .fun-fact-text h2 .pawprint {
         width: 40px;
@@ -531,6 +531,7 @@
       .fun-fact-text p {
         font-size: 1.2em;
         line-height: 1.4;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.5); /* Added subtle shadow to match the image */
       }
 
       /* DIAGONAL Tokenomics Section */
@@ -1231,7 +1232,7 @@
       @media only screen and (min-width: 1024px) {
         .top-menu-container {
           justify-content: space-between;
-          align-items: center;
+          align-items:ప center;
           flex-wrap: wrap;
         }
 
@@ -1290,66 +1291,59 @@
 
       .achievements-section h2 {
         text-align: center;
-        color: #ffd700;
+        font-size: 2.5em;
         margin-bottom: 30px;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
       }
-
       .achievements-section > div {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 20px;
       }
-
       .achievement-card {
-        background: rgba(0, 4, 40, 0.9);
-        border: 2px solid rgba(255, 215, 0, 0.3);
+        background: rgba(255, 255, 255, 0.1);
         border-radius: 15px;
         padding: 20px;
-        color: #fff;
         cursor: pointer;
-        transition: transform 0.3s ease;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 2px solid rgba(255, 215, 0, 0.3);
       }
-
-      .achievement-card div {
+      .achievement-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+      }
+      .achievement-icon {
+        font-size: 2.5em;
         margin-bottom: 10px;
       }
-
       .achievement-card h3 {
         color: #ffd700;
-        margin: 0;
+        margin: 10px 0;
       }
-
       .achievement-card p {
-        margin: 0;
+        color: #ccc;
         font-size: 0.9em;
       }
-
       .progress-bar {
         background: rgba(255, 255, 255, 0.1);
-        height: 8px;
-        border-radius: 4px;
+        height: 10px;
+        border-radius: 5px;
+        margin-top: 15px;
         overflow: hidden;
       }
-
       .progress {
-        height: 100%;
         background: linear-gradient(90deg, #ff8c00, #ffd700);
+        height: 100%;
+        width: 0%;
+        transition: width 0.5s ease;
       }
-
-      @media (min-width: 640px) {
-        .achievements-section > div {
-          grid-template-columns: repeat(2, 1fr);
-        }
+      .achievement-unlocked {
+        border-color: #ffd700;
+        background: rgba(255, 215, 0, 0.1);
       }
-
-      @media (min-width: 1024px) {
-        .achievements-section > div {
-          grid-template-columns: repeat(4, 1fr);
-        }
+      .achievement-unlocked .progress {
+        width: 100% !important;
       }
     </style>
   </head>
@@ -1739,76 +1733,6 @@
       </div>
     </div>
 
-    <style>
-      .achievements-section {
-        padding: 40px 20px;
-      }
-
-      .achievements-section h2 {
-        text-align: center;
-        color: #ffd700;
-        margin-bottom: 30px;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-      }
-
-      .achievements-section > div {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-      }
-
-      .achievement-card {
-        background: rgba(0, 4, 40, 0.9);
-        border: 2px solid rgba(255, 215, 0, 0.3);
-        border-radius: 15px;
-        padding: 20px;
-        color: #fff;
-        cursor: pointer;
-        transition: transform 0.3s ease;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .achievement-card div {
-        margin-bottom: 10px;
-      }
-
-      .achievement-card h3 {
-        color: #ffd700;
-        margin: 0;
-      }
-
-      .achievement-card p {
-        margin: 0;
-        font-size: 0.9em;
-      }
-
-      .progress-bar {
-        background: rgba(255, 255, 255, 0.1);
-        height: 8px;
-        border-radius: 4px;
-        overflow: hidden;
-      }
-
-      .progress {
-        height: 100%;
-        background: linear-gradient(90deg, #ff8c00, #ffd700);
-      }
-
-      @media (min-width: 640px) {
-        .achievements-section > div {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
-
-      @media (min-width: 1024px) {
-        .achievements-section > div {
-          grid-template-columns: repeat(4, 1fr);
-        }
-      }
-    </style>
-
     <!-- Community Section -->
     <div class="section community" id="community" style="background: linear-gradient(135deg, #ff8c00, #ffd700); color: #000; border: 3px solid #000; margin: 20px auto 50px; max-width: 1200px;">
       <h2>Join the Community & Elevate Your Mindset!</h2>
@@ -2099,4 +2023,4 @@
       });
     </script>
   </body>
-</html>
+  </html>
