@@ -7,10 +7,7 @@
     <!-- Google Fonts: Luckiest Guy -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet" />
     <!-- Confetti Library for Celebration -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
 
@@ -509,19 +506,19 @@
         margin-bottom: 20px;
       }
       .fun-fact-text {
-        color: #ffffff; /* White text to match the image */
+        color: #ffffff;
         max-width: 600px;
         text-align: center;
-        border: 3px solid black; /* Matches the image's thin black border */
+        border: 3px solid black;
         border-radius: 5px;
         padding: 20px;
-        background: #004e92; /* Solid dark blue background to match the image */
+        background: #004e92;
         box-shadow: 0 8px 20px rgba(0,0,0,0.1);
       }
       .fun-fact-text h2 {
         margin-top: 0;
         font-size: 2.5em;
-        text-shadow: 2px 2px 5px rgba(0,0,0,0.5); /* Existing shadow matches the image */
+        text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
       }
       .fun-fact-text h2 .pawprint {
         width: 40px;
@@ -531,7 +528,7 @@
       .fun-fact-text p {
         font-size: 1.2em;
         line-height: 1.4;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.5); /* Added subtle shadow to match the image */
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
       }
 
       /* DIAGONAL Tokenomics Section */
@@ -916,17 +913,23 @@
       }
 
       /* Achievement System */
-      .achievements {
-        text-align: center;
+      .achievements-section {
+        padding: 40px 20px;
       }
-      .achievement-grid {
+      .achievements-section h2 {
+        text-align: center;
+        font-size: 2.5em;
+        margin-bottom: 30px;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      }
+      .achievements-section > div {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 20px;
-        padding: 20px;
       }
       .achievement-card {
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(0, 4, 40, 0.9);
         border-radius: 15px;
         padding: 20px;
         cursor: pointer;
@@ -948,67 +951,6 @@
       .achievement-card p {
         color: #ccc;
         font-size: 0.9em;
-      }
-      .progress-bar {
-        background: rgba(255, 255, 255, 0.1);
-        height: 10px;
-        border-radius: 5px;
-        margin-top: 15px;
-        overflow: hidden;
-      }
-      .progress {
-        background: linear-gradient(90deg, #ff8c00, #ffd700);
-        height: 100%;
-        width: 0%;
-        transition: width 0.5s ease;
-      }
-      .achievement-unlocked {
-        border-color: #ffd700;
-        background: rgba(255, 215, 0, 0.1);
-      }
-      .achievement-unlocked .progress {
-        width: 100% !important;
-      }
-
-      /* Desktop Layout Adjustments */
-      @media only screen and (min-width: 1024px) {
-        header h1 {
-          font-size: 4em;
-        }
-        header p {
-          font-size: 1.5em;
-        }
-        .section {
-          padding: 40px;
-          margin-bottom: 60px;
-        }
-        .section h2 {
-          font-size: 3em;
-        }
-        .character img {
-          width: 180px;
-        }
-        .social-icons a img {
-          width: 50px;
-        }
-        .container > .section:not(:last-child) {
-          margin-bottom: 60px;
-        }
-        .tokenomics-list li {
-          font-size: 1.3em;
-        }
-        .fun-fact-char {
-          width: 300px;
-        }
-      }
-      .stars-container {
-        text-align: center;
-        margin-top: 10px;
-      }
-      .stars-container svg polygon {
-        fill: silver;
-        stroke: #666;
-        stroke-width: 0.5;
       }
 
       /* Motivation Analyzer Styles */
@@ -1129,9 +1071,9 @@
         overflow: hidden;
         margin: 20px auto;
       }
-      .progress-bar {
+      #results .progress-bar {
         height: 100%;
-        background: #ff8c00;
+        background: linear-gradient(90deg, #ff8c00, #ffd700);
         transition: width 0.5s ease;
       }
 
@@ -1197,23 +1139,20 @@
         height: 40px;
         transition: transform 0.3s ease;
       }
-
       .social-icon-container img {
         width: 30px;
         height: 30px;
         border-radius: 50%;
       }
-
       .social-icon-container:hover {
         transform: scale(1.1);
       }
 
       /* Desktop Menu Styles */
       .desktop-menu {
-        display: none; /* Hidden by default for mobile */
+        display: none;
         gap: 20px;
       }
-
       .desktop-menu a {
         color: #fff;
         text-decoration: none;
@@ -1222,7 +1161,6 @@
         border-radius: 10px;
         transition: background 0.3s ease;
       }
-
       .desktop-menu a:hover {
         background: linear-gradient(135deg, #ff8c00, #ffd700);
         color: #000;
@@ -1232,37 +1170,27 @@
       @media only screen and (min-width: 1024px) {
         .top-menu-container {
           justify-content: space-between;
-          align-items:ప center;
+          align-items: center;
           flex-wrap: wrap;
         }
-
-        /* Hide Mobile Menu for Desktop */
         .menu-container {
           display: none;
         }
-
-        /* Show Desktop Menu */
         .desktop-menu {
           display: flex;
           justify-content: flex-start;
           flex-grow: 1;
         }
-
-        /* Center Social Icons in the Middle */
         .social-icons.desktop-socials {
           display: flex;
           justify-content: center;
           gap: 15px;
           flex-grow: 1;
-          order: 2; /* Ensures social icons appear between menu and eBook button */
+          order: 2;
         }
-
-        /* Ensure eBook Button Stays on Right */
         .ebook-button {
           order: 3;
         }
-
-        /* Hide Bottom Social Icons for Desktop */
         #socials {
           display: none;
         }
@@ -1271,10 +1199,10 @@
       /* Keep Bottom Social Icons for Mobile */
       @media only screen and (max-width: 1023px) {
         .social-icons.desktop-socials {
-          display: none; /* Hide social icons in menu for mobile */
+          display: none;
         }
         .desktop-menu {
-          display: none; /* Hide desktop menu for mobile */
+          display: none;
         }
       }
 
@@ -1283,68 +1211,6 @@
         position: relative;
         width: 100%;
       }
-
-      /* Achievements Section Styles */
-      .achievements-section {
-        padding: 40px 20px;
-      }
-
-      .achievements-section h2 {
-        text-align: center;
-        font-size: 2.5em;
-        margin-bottom: 30px;
-        color: white;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-      }
-      .achievements-section > div {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
-      }
-      .achievement-card {
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 15px;
-        padding: 20px;
-        cursor: pointer;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border: 2px solid rgba(255, 215, 0, 0.3);
-      }
-      .achievement-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
-      }
-      .achievement-icon {
-        font-size: 2.5em;
-        margin-bottom: 10px;
-      }
-      .achievement-card h3 {
-        color: #ffd700;
-        margin: 10px 0;
-      }
-      .achievement-card p {
-        color: #ccc;
-        font-size: 0.9em;
-      }
-      .progress-bar {
-        background: rgba(255, 255, 255, 0.1);
-        height: 10px;
-        border-radius: 5px;
-        margin-top: 15px;
-        overflow: hidden;
-      }
-      .progress {
-        background: linear-gradient(90deg, #ff8c00, #ffd700);
-        height: 100%;
-        width: 0%;
-        transition: width 0.5s ease;
-      }
-      .achievement-unlocked {
-        border-color: #ffd700;
-        background: rgba(255, 215, 0, 0.1);
-      }
-      .achievement-unlocked .progress {
-        width: 100% !important;
-      }
     </style>
   </head>
   <body>
@@ -1352,7 +1218,6 @@
     <header>
       <nav class="navigation-bar">
         <div class="top-menu-container">
-          <!-- Mobile Menu Button and Dropdown -->
           <div class="menu-container">
             <button class="menu-button" onclick="toggleDropdown()"><span></span></button>
             <div class="dropdown-menu">
@@ -1362,14 +1227,12 @@
               <a href="#motivation-analyzer">Analyzer</a>
             </div>
           </div>
-          <!-- Desktop Menu Items -->
           <div class="desktop-menu">
             <a href="#about">ABOUT</a>
             <a href="#roadmap">ROADMAP</a>
             <a href="#tokenomics">TOKENOMICS</a>
             <a href="#motivation-analyzer">ANALYZER</a>
           </div>
-          <!-- Social Icons (Moved from Bottom for Desktop) -->
           <div class="social-icons desktop-socials">
             <a href="https://dexscreener.com" target="_blank">
               <div class="social-icon-container">
@@ -1392,7 +1255,6 @@
               </div>
             </a>
           </div>
-          <!-- Buy eBook Button -->
           <a href="Payments.html" class="ebook-button">Buy eBook</a>
         </div>
       </nav>
@@ -1432,17 +1294,8 @@
           <span class="contract-address" style="color: #000;">
             HKmBnM1ErJjCk1jtvtRDE9sWnDizXeqLCxrMove5CfUS
           </span>
-          <img
-            src="svg.png"
-            alt="Copy Address"
-            class="copy-icon"
-            onclick="copyAddress()"
-          />
-          <img
-            src="checkmark.png"
-            alt="Copied"
-            class="checkmark-icon"
-          />
+          <img src="svg.png" alt="Copy Address" class="copy-icon" onclick="copyAddress()" />
+          <img src="checkmark.png" alt="Copied" class="checkmark-icon" />
         </div>
       </div>
     </div>
@@ -1472,16 +1325,13 @@
           <img src="chasecat.png" alt="Chasecat" style="border: 3px solid #ffd700;" />
           <h3 style="color: #ffd700;">Chasecat</h3>
           <p>
-            I am ChaseCat—relentless, ambitious, and driven by the pursuit of
-            success. I inspire you to rise, hustle, and chase your dreams without
-            compromise.
+            I am ChaseCat—relentless, ambitious, and driven by the pursuit of success. I inspire you to rise, hustle, and chase your dreams without compromise.
           </p>
         </div>
         <div class="character">
           <h3>-Chasecat mindset-</h3>
           <p>
-            Wake up. No one is coming to hand you success. Get ruthless about your future. 
-            Chase it. Take it. Own it. That's the ChaseCat way.
+            Wake up. No one is coming to hand you success. Get ruthless about your future. Chase it. Take it. Own it. That's the ChaseCat way.
           </p>
         </div>
       </div>
@@ -1530,14 +1380,7 @@
 
     <!-- Community Art Gallery -->
     <h2 style="text-align:center;">Community Art Gallery</h2>
-    <marquee
-      behavior="scroll"
-      direction="left"
-      scrollamount="8"
-      style="white-space: nowrap;"
-      onmouseover="this.stop();"
-      onmouseout="this.start();"
-    >
+    <marquee behavior="scroll" direction="left" scrollamount="8" style="white-space: nowrap;" onmouseover="this.stop();" onmouseout="this.start();">
       <div class="meme-container">
         <img src="meme1.png" alt="Meme 1" />
       </div>
@@ -1573,7 +1416,6 @@
     <!-- HOW TO BUY SECTION -->
     <h2 id="how-to-buy" style="text-align:center;">How to Buy ChaseCat Token</h2>
     <div class="htb-block-container">
-      <!-- Block 1 -->
       <div class="htb-block">
         <div class="htb-icon">
           <img src="phantom.png" alt="Wallet Icon" />
@@ -1581,19 +1423,13 @@
         <div class="htb-info">
           <h3>1. Download Phantom Wallet</h3>
           <p>
-            Download and set up the <strong>Phantom Wallet</strong> from the
-            official website or app store.
+            Download and set up the <strong>Phantom Wallet</strong> from the official website or app store.
           </p>
-          <button
-            class="phantom-button"
-            onclick="window.open('https://phantom.app/download','_blank')"
-          >
+          <button class="phantom-button" onclick="window.open('https://phantom.app/download','_blank')">
             DOWNLOAD PHANTOM
           </button>
         </div>
       </div>
-
-      <!-- Block 2 -->
       <div class="htb-block">
         <div class="htb-icon">
           <img src="solana.png" alt="Solana Icon" />
@@ -1601,13 +1437,10 @@
         <div class="htb-info">
           <h3>2. Transfer SOL</h3>
           <p>
-            Transfer some Solana (SOL) into your Phantom Wallet to cover gas
-            fees.
+            Transfer some Solana (SOL) into your Phantom Wallet to cover gas fees.
           </p>
         </div>
       </div>
-
-      <!-- Block 3 -->
       <div class="htb-block">
         <div class="htb-icon">
           <img src="raydium.png" alt="DEX Icon" />
@@ -1615,10 +1448,7 @@
         <div class="htb-info">
           <h3>3. Connect to a DEX</h3>
           <p>
-            Visit a trusted DEX like
-            <a href="https://raydium.io" target="_blank">Raydium</a> or
-            <a href="https://orca.so" target="_blank">Orca</a>, then connect
-            your Phantom Wallet.
+            Visit a trusted DEX like <a href="https://raydium.io" target="_blank">Raydium</a> or <a href="https://orca.so" target="_blank">Orca</a>, then connect your Phantom Wallet.
           </p>
         </div>
       </div>
@@ -1627,8 +1457,7 @@
     <!-- Final Step #4 -->
     <div class="final-step-block">
       <h3>
-        4. Swap for $ChaseCat – Swap your SOL or other tokens for ChaseCat,
-        then confirm the transaction in Phantom. Enjoy your new tokens!
+        4. Swap for $ChaseCat – Swap your SOL or other tokens for ChaseCat, then confirm the transaction in Phantom. Enjoy your new tokens!
       </h3>
       <button class="final-swap-button" onclick="window.open('https://jup.ag','_blank')">
         SWAP NOW
@@ -1702,33 +1531,21 @@
           <div style="font-size: 2em; margin-bottom: 10px;">🌟</div>
           <h3 style="color: #ffd700; margin: 0 0 10px 0;">Early Adopter</h3>
           <p style="margin: 0 0 15px 0;">Join the ChaseCat community</p>
-          <div style="background: rgba(255, 255, 255, 0.1); height: 8px; border-radius: 4px; overflow: hidden;">
-            <div class="progress" style="width: 0%; height: 100%; background: linear-gradient(90deg, #ff8c00, #ffd700);"></div>
-          </div>
         </div>
         <div class="achievement-card" onclick="unlockAchievement(1)" style="background: rgba(0, 4, 40, 0.9); border: 2px solid rgba(255, 215, 0, 0.3); border-radius: 15px; padding: 20px; color: #fff; cursor: pointer; transition: transform 0.3s ease;">
           <div style="font-size: 2em; margin-bottom: 10px;">📚</div>
           <h3 style="color: #ffd700; margin: 0 0 10px 0;">Knowledge Seeker</h3>
           <p style="margin: 0 0 15px 0;">Purchase the ChaseCat eBook</p>
-          <div style="background: rgba(255, 255, 255, 0.1); height: 8px; border-radius: 4px; overflow: hidden;">
-            <div class="progress" style="width: 0%; height: 100%; background: linear-gradient(90deg, #ff8c00, #ffd700);"></div>
-          </div>
         </div>
         <div class="achievement-card" onclick="unlockAchievement(2)" style="background: rgba(0, 4, 40, 0.9); border: 2px solid rgba(255, 215, 0, 0.3); border-radius: 15px; padding: 20px; color: #fff; cursor: pointer; transition: transform 0.3s ease;">
           <div style="font-size: 2em; margin-bottom: 10px;">🎯</div>
           <h3 style="color: #ffd700; margin: 0 0 10px 0;">Goal Setter</h3>
           <p style="margin: 0 0 15px 0;">Share your first motivation</p>
-          <div style="background: rgba(255, 255, 255, 0.1); height: 8px; border-radius: 4px; overflow: hidden;">
-            <div class="progress" style="width: 0%; height: 100%; background: linear-gradient(90deg, #ff8c00, #ffd700);"></div>
-          </div>
         </div>
         <div class="achievement-card" onclick="unlockAchievement(3)" style="background: rgba(0, 4, 40, 0.9); border: 2px solid rgba(255, 215, 0, 0.3); border-radius: 15px; padding: 20px; color: #fff; cursor: pointer; transition: transform 0.3s ease;">
           <div style="font-size: 2em; margin-bottom: 10px;">💎</div>
           <h3 style="color: #ffd700; margin: 0 0 10px 0;">Diamond Hands</h3>
           <p style="margin: 0 0 15px 0;">Hold ChaseCat tokens</p>
-          <div style="background: rgba(255, 255, 255, 0.1); height: 8px; border-radius: 4px; overflow: hidden;">
-            <div class="progress" style="width: 0%; height: 100%; background: linear-gradient(90deg, #ff8c00, #ffd700);"></div>
-          </div>
         </div>
       </div>
     </div>
@@ -1737,9 +1554,7 @@
     <div class="section community" id="community" style="background: linear-gradient(135deg, #ff8c00, #ffd700); color: #000; border: 3px solid #000; margin: 20px auto 50px; max-width: 1200px;">
       <h2>Join the Community & Elevate Your Mindset!</h2>
       <p>
-        Unlock motivation, joy, and financial wisdom with ChaseCat's fun book.
-        Laugh, learn, and take control of your future. Stay inspired—connect
-        with us on Telegram, TikTok, and beyond!
+        Unlock motivation, joy, and financial wisdom with ChaseCat's fun book. Laugh, learn, and take control of your future. Stay inspired—connect with us on Telegram, TikTok, and beyond!
       </p>
       <a href="Payments.html" class="cta-button" style="background: linear-gradient(135deg, #000428, #004e92); border: 3px solid #000;">Buy Now</a>
     </div>
@@ -1758,18 +1573,12 @@
 
         if (!card.classList.contains('achievement-unlocked')) {
           card.classList.add('achievement-unlocked');
-
-          // Celebration effects
           confetti({
             particleCount: 50,
             spread: 60,
             origin: { y: 0.7 }
           });
-
-          // Save achievement state
           localStorage.setItem(`achievement_${index}`, 'unlocked');
-
-          // Show notification
           const title = card.querySelector('h3').textContent;
           const notification = document.createElement('div');
           notification.style.cssText = `
@@ -1786,7 +1595,6 @@
           `;
           notification.innerHTML = `🏆 Achievement Unlocked: ${title}`;
           document.body.appendChild(notification);
-
           setTimeout(() => {
             notification.style.animation = 'slideOut 0.5s ease-in';
             setTimeout(() => notification.remove(), 500);
@@ -1794,11 +1602,11 @@
         }
       }
 
-      // Load saved achievements
       document.addEventListener('DOMContentLoaded', function() {
         for (let i = 0; i < 4; i++) {
           if (localStorage.getItem(`achievement_${i}`) === 'unlocked') {
-            unlockAchievement(i);
+            const cards = document.querySelectorAll('.achievement-card');
+            cards[i].classList.add('achievement-unlocked');
           }
         }
       });
@@ -1808,7 +1616,6 @@
         const address = document.querySelector('.contract-address').innerText;
         const copyIcon = document.querySelector('.copy-icon');
         const checkmarkIcon = document.querySelector('.checkmark-icon');
-
         navigator.clipboard.writeText(address)
           .then(() => {
             copyIcon.style.display = 'none';
@@ -1819,9 +1626,7 @@
               copyIcon.style.display = 'inline';
             }, 1000);
           })
-          .catch(err => {
-            console.error('Error copying text: ', err);
-          });
+          .catch(err => console.error('Error copying text: ', err));
       }
 
       // Toggle Dropdown Menu
@@ -1835,7 +1640,6 @@
       // Responsive Carousel Initialization
       document.addEventListener("DOMContentLoaded", function () {
         const images = document.querySelectorAll(".motivational-carousel img");
-
         if (window.innerWidth < 1024) {
           let currentIndex = 0;
           let startX = 0;
@@ -1844,11 +1648,8 @@
           function showImage(index) {
             images.forEach((img, i) => {
               img.classList.remove("active", "exit");
-              if (i === index) {
-                img.classList.add("active");
-              } else if (i < index) {
-                img.classList.add("exit");
-              }
+              if (i === index) img.classList.add("active");
+              else if (i < index) img.classList.add("exit");
             });
           }
 
@@ -1864,7 +1665,6 @@
             startX = e.touches[0].clientX;
             isDragging = true;
           });
-
           carousel.addEventListener("touchmove", (e) => {
             if (!isDragging) return;
             let diff = e.touches[0].clientX - startX;
@@ -1873,27 +1673,15 @@
               isDragging = false;
             }
           });
-
-          carousel.addEventListener("touchend", () => {
-            isDragging = false;
-          });
+          carousel.addEventListener("touchend", () => isDragging = false);
 
           const leftBtn = document.querySelector(".carousel-buttons .carousel-btn.left");
           const rightBtn = document.querySelector(".carousel-buttons .carousel-btn.right");
-
-          leftBtn.addEventListener("click", () => {
-            handleSwipe(currentIndex - 1);
-          });
-
-          rightBtn.addEventListener("click", () => {
-            handleSwipe(currentIndex + 1);
-          });
-
+          leftBtn.addEventListener("click", () => handleSwipe(currentIndex - 1));
+          rightBtn.addEventListener("click", () => handleSwipe(currentIndex + 1));
           showImage(currentIndex);
         } else {
-          images.forEach(img => {
-            img.classList.add("active");
-          });
+          images.forEach(img => img.classList.add("active"));
         }
       });
 
@@ -1941,7 +1729,7 @@
         else if (maxCount === personalCount && personalCount > 0) category = 'personal';
         else category = 'winning mentality';
 
-        const score = (maxCount / words.length) * 100;
+        const score = Math.min((totalKeywords / words.length) * 200, 100);
         return { 
           category, 
           score: score.toFixed(2), 
@@ -1985,16 +1773,19 @@
             <button id="try-again">Try Again</button>
             <button id="share-result">Share</button>
           `;
-
           resultsDiv.style.display = 'block';
 
-          // Animate progress bar
+          // Animate progress bar with parsed score
           setTimeout(() => {
             const progressBar = resultsDiv.querySelector('.progress-bar');
-            progressBar.style.width = `${result.score}%`;
+            const score = parseFloat(result.score);
+            progressBar.style.width = `${score}%`;
           }, 100);
 
-          // Add event listeners for buttons
+          if (result.category !== 'invalid' && 'vibrate' in navigator) {
+            navigator.vibrate(200);
+          }
+
           document.getElementById('try-again').addEventListener('click', () => {
             resultsDiv.style.display = 'none';
             document.getElementById('input-section').style.display = 'flex';
@@ -2023,4 +1814,4 @@
       });
     </script>
   </body>
-  </html>
+              </html>
