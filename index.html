@@ -1564,6 +1564,14 @@
       <p>© 2025 ChaseCat Token. All Rights Reserved. Built to inspire!</p>
     </footer>
 
+    <!-- Feedback Modal -->
+    <div id="feedback-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+      <div id="modal-content" style="background: #000; padding: 20px; border-radius: 10px; color: #fff; text-align: center; max-width: 400px; border: 2px solid #ffd700;">
+        <p id="modal-message"></p>
+        <button id="close-modal" style="background: transparent; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">OK</button>
+      </div>
+    </div>
+
     <!-- Scripts -->
     <script>
       // Achievement System
@@ -1604,7 +1612,7 @@
 
       document.addEventListener('DOMContentLoaded', function() {
         for (let i = 0; i < 4; i++) {
-          if (localStorage.getItem(`achievement_${i}`) === 'unlocked') {
+          if (localStorage.getItem(`achievement_${index}`) === 'unlocked') {
             const cards = document.querySelectorAll('.achievement-card');
             cards[i].classList.add('achievement-unlocked');
           }
@@ -1702,7 +1710,7 @@
       };
 
       function analyzeMotivation(text) {
-        const words = text.toLowerCase().split(/\s+/).filter(word => word.length > 0);
+        const words = text.toLowerCase().split(/\s+/).filter(word => word.length > 0).map(word => word.replace(/[^a-z]/g, ''));
         if (words.length < 5) {
           return { category: 'invalid', score: '0.00', message: 'Please write a longer motivation (at least 5 words).' };
         }
@@ -1771,11 +1779,11 @@
               <div class="progress-bar" style="width: 0%;"></div>
             </div>
             <button id="try-again">Try Again</button>
-            <button id="share-result">Share</button>
+            ${parseFloat(result.score) > 50 ? '<button id="claim-reward">Claim Reward</button>' : ''}
           `;
+
           resultsDiv.style.display = 'block';
 
-          // Animate progress bar with parsed score
           setTimeout(() => {
             const progressBar = resultsDiv.querySelector('.progress-bar');
             const score = parseFloat(result.score);
@@ -1792,15 +1800,42 @@
             document.getElementById('motivation-input').value = '';
           });
 
-          document.getElementById('share-result').addEventListener('click', () => {
-            const shareText = `I just analyzed my motivation with ChaseCat Token! My motivation was categorized as ${result.category} with a score of ${result.score}%! Check it out at https://chasecat-token.com.`;
-            navigator.clipboard.writeText(shareText).then(() => {
-              alert('Result copied to clipboard!');
-            }).catch(err => {
-              console.error('Error copying text: ', err);
-              alert('Failed to copy. Please try again.');
+          if (parseFloat(result.score) > 50) {
+            document.getElementById('claim-reward').addEventListener('click', () => {
+              const isError = Math.random() < 0.2;  // Simulate 20% chance of error
+              const modal = document.getElementById('feedback-modal');
+              const modalContent = document.getElementById('modal-content');
+              const modalMessage = document.getElementById('modal-message');
+              const closeButton = document.getElementById('close-modal');
+              const projectEmail = 'yourprojectemail@example.com';  // Replace with actual email
+
+              if (isError) {
+                modalMessage.textContent = 'Error: Unable to claim reward. Please try again later.';
+                modalContent.style.borderColor = '#ff0000';
+              } else {
+                modalMessage.textContent = `Congratulations! You've earned 5 free ChaseCat tokens.
+
+To claim your reward, please send an email to ${projectEmail} with the following details:
+- Your motivation: "${motivationText}"
+- Your wallet address
+
+We'll send the tokens to your wallet shortly after receiving your email.`;
+                modalContent.style.borderColor = '#ffd700';
+              }
+
+              modal.style.display = 'flex';
+
+              closeButton.onclick = () => {
+                modal.style.display = 'none';
+              };
+
+              modal.onclick = (e) => {
+                if (e.target === modal) {
+                  modal.style.display = 'none';
+                }
+              };
             });
-          });
+          }
 
           if (result.category !== 'invalid' && result.category !== 'general') {
             confetti({
