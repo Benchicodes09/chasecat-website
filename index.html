@@ -1264,6 +1264,7 @@
         <a href="https://raydium.io/swap" target="_blank" class="buy-button">Buy Token</a>
       </div>
     </header>
+
     <!-- Marquee Announcement -->
     <div class="marquee-container">
       <marquee behavior="scroll" direction="left" scrollamount="5">
@@ -1612,7 +1613,7 @@
 
       document.addEventListener('DOMContentLoaded', function() {
         for (let i = 0; i < 4; i++) {
-          if (localStorage.getItem(`achievement_${index}`) === 'unlocked') {
+          if (localStorage.getItem(`achievement_${i}`) === 'unlocked') {
             const cards = document.querySelectorAll('.achievement-card');
             cards[i].classList.add('achievement-unlocked');
           }
@@ -1779,7 +1780,7 @@
               <div class="progress-bar" style="width: 0%;"></div>
             </div>
             <button id="try-again">Try Again</button>
-            ${parseFloat(result.score) > 50 ? '<button id="claim-reward">Claim Reward</button>' : ''}
+            ${parseFloat(result.score) > 50 && localStorage.getItem('hasClaimedReward') !== 'true' ? '<button id="claim-reward">Claim Reward</button>' : ''}
           `;
 
           resultsDiv.style.display = 'block';
@@ -1800,14 +1801,16 @@
             document.getElementById('motivation-input').value = '';
           });
 
-          if (parseFloat(result.score) > 50) {
+          if (document.getElementById('claim-reward')) {
             document.getElementById('claim-reward').addEventListener('click', () => {
-              const isError = Math.random() < 0.2;  // Simulate 20% chance of error
+              localStorage.setItem('hasClaimedReward', 'true');
+              document.getElementById('claim-reward').style.display = 'none';
+              const isError = Math.random() < 0.2;
               const modal = document.getElementById('feedback-modal');
               const modalContent = document.getElementById('modal-content');
               const modalMessage = document.getElementById('modal-message');
               const closeButton = document.getElementById('close-modal');
-              const projectEmail = 'yourprojectemail@example.com';  // Replace with actual email
+              const projectEmail = 'yourprojectemail@example.com';
 
               if (isError) {
                 modalMessage.textContent = 'Error: Unable to claim reward. Please try again later.';
@@ -1849,4 +1852,4 @@ We'll send the tokens to your wallet shortly after receiving your email.`;
       });
     </script>
   </body>
-              </html>
+  </html>
