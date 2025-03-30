@@ -413,7 +413,7 @@
         box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         display: flex;
         align-items: center;
-        gap: 10px; /* Add gap between text and icon */
+        gap: 10px;
       `;
       if (isSuccess) {
         const img = document.createElement('img');
@@ -434,37 +434,30 @@
       }, 3000);
     }
 
-    
-
     function redeemCoupon() {
       const couponCode = document.getElementById("coupon-input").value;
       const validCoupons = { "CODE123": "ChaseCat_Ebook.pdf" }; // Example coupon code
       const downloadLink = document.getElementById("download-link");
 
       if (validCoupons[couponCode]) {
-        
-        downloadLink.style.display = "block";
-        showNotification("Coupon redeemed successfully! Click the link to download your ebook.", true);
-        
-        // Play cheerful bell chime sound
-        const bellSound = new Audio("data:audio/wav;base64,//uQRAAAAWMSLwUIYAAsYkXgoQwAEaYLWfkWgAI0wWs/ItAAAGDgYtAgAyN+QWaAAihwMWm4G8QQRDiMcCBcH3Eh+LAB6v0/MHhGAEUgJhJsAGg7D9TJLBbXMDgsYkf3UAFYnAFv4nqe7ryHwW78cHLVBHFxgYYUOnam2Jgd8uQGIqZDB1Q93wLGDkwX9nfwfgfm7cfzPOWR/8lGmPav5xVwnIiJS6HXk+BVKZF+JcWjAsb/GEuq/eFdpuzSqeYTcfi6idkyugwfYwXFU1+5fZKUaRKYCwkkFQVfcAs1fXA5V+++FGfvjJ/CxURaSxaBvGdGDhfXE28LWuT9ozCl5xw4Yq5OGazvV24mZVSoOO0yZ31j7kYvtwYK6ygKAXFpZnQ7zLQgPkZEVyxXGmcnO+WwExpJpLXBWu68ZDELMvAwOB3VVEFu+BWyASmbhLbfUVz2Ip3AwgHUT8sL1q4ePmYg+VZF/JOEaV4t0RHR+NYGWHiwQiQu3DReG2WVZEM8R0+8BNRf6gNXJLymiodVnlOj+XnUiJDGX5xZLWIk/s5YPzf9P2WvyDyV9oOJMlz8jcw+yXsJ7YHEcMuYd4D/gNZfE0qXddpPtzv0Xh0YZZnG3SxPSeMJSkFaWtC2ggWrq6CxrcQlyyBQxyVCBCxfyGjnWumqsIeztDQKv84dOv0Xed1rKrbkEELwLZpbGIgQYcLtNhPLqEkFGeK7vkF6+Yt779kc0BAyQCIKO3qEYxQeSWdFJH0/vE8BVHNGaQkS0YhhQqGDHJJiQkxG2lHw6jbtiR4JzYG5IsR5Ps6B1lN/zGZqfVmyO8ykqJGQB5YNQuEw7YbG1QaJ1ciXtEh5XcQlZLYIvq0wYENO");
-        bellSound.volume = 0.8; // Slightly reduced volume for better sound
-        bellSound.play().catch(e => console.error('Error playing sound:', e));
-        
-        // Trigger confetti with vibration
-        const duration = 3000; // 3 seconds
-        const interval = 100; // Vibration pattern interval
-        let timeElapsed = 0;
-        
-        const vibrateInterval = setInterval(() => {
-          if (timeElapsed < duration && 'vibrate' in navigator) {
-            navigator.vibrate([10, 10]); // Subtle vibration pattern
-          } else {
-            clearInterval(vibrateInterval);
-          }
-          timeElapsed += interval;
-        }, interval);
+        const hasRedeemed = localStorage.getItem('hasRedeemed');
 
+        if (!hasRedeemed) {
+          // First redemption: briefly show download link, then hide it
+          downloadLink.style.display = "block";
+          showNotification("Coupon redeemed successfully! Click the link to download your ebook.", true);
+          localStorage.setItem('hasRedeemed', 'true');
+          // Hide the download link after a short delay (e.g., after notification)
+          setTimeout(() => {
+            downloadLink.style.display = "none";
+          }, 3000); // Matches notification duration
+        } else {
+          // Subsequent redemptions: show thank you message
+          showNotification("Thank you for downloading", true);
+          downloadLink.style.display = "none"; // Ensure it stays hidden
+        }
+
+        // Trigger confetti on every valid redemption
         confetti({
           particleCount: 100,
           spread: 70,
@@ -479,6 +472,14 @@
         showNotification("Invalid coupon code.", false);
       }
     }
+
+    // Ensure download link is hidden if already redeemed on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const hasRedeemed = localStorage.getItem('hasRedeemed');
+      if (hasRedeemed) {
+        document.getElementById('download-link').style.display = 'none';
+      }
+    });
   </script>
 
   <style>
@@ -486,7 +487,6 @@
       from { transform: translateX(100%); opacity: 0; }
       to { transform: translateX(0); opacity: 1; }
     }
-
     @keyframes slideOut {
       from { transform: translateX(0); opacity: 1; }
       to { transform: translateX(100%); opacity: 0; }
