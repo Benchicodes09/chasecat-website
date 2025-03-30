@@ -387,6 +387,7 @@
     <p>© 2025 ChaseCat Token. All Rights Reserved. Built to inspire!</p>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <script>
     function toggleDropdown() {
       var dropdown = document.getElementById("dropdownMenu");
@@ -442,8 +443,19 @@
       const couponCode = document.getElementById("coupon-input").value;
       const validCoupons = { "CODE123": "ChaseCat_Ebook.pdf" }; // Example coupon code
       const downloadLink = document.getElementById("download-link");
+      
+      // Check local storage first
+      const usedCoupons = JSON.parse(localStorage.getItem('usedCoupons') || '[]');
+      if (usedCoupons.includes(couponCode)) {
+        showNotification("You have already used this coupon code.", false);
+        return;
+      }
 
       if (validCoupons[couponCode]) {
+        // Save to local storage
+        usedCoupons.push(couponCode);
+        localStorage.setItem('usedCoupons', JSON.stringify(usedCoupons));
+        
         downloadLink.style.display = "block";
         showNotification("Coupon redeemed successfully! Click the link to download your ebook.", true);
         playSuccessSound();
