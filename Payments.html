@@ -335,19 +335,19 @@
   <div class="content">
     <h2>ChaseCat Ebook</h2>
     <p>
-      The ChaseCat book isn’t just another manual—it’s a heartfelt call to awaken your inner strength. If you feel overwhelmed by constant struggles and notice opportunities fading before you, this book provides transformative strategies, mindset shifts, and genuine guidance to help you reclaim control of your life. There’s no external hero waiting; the power to change everything lies within you. Now is the moment to rise above hesitation and embrace action.
+      Transform your life with ChaseCat's powerful guide to success. Packed with actionable strategies and mindset techniques, this book will help you unlock your potential and achieve your goals. Don't wait for success—chase it!
     </p>
     <p class="payment-info">Price: $1.20 = (0.00613 SOL)</p>
     <a href="http://t.me/ChaseEbook_bot" class="cta-button">Buy on Telegram</a>
-    
+
     <div class="coupon-section">
       <h3>Or Use Coupon Code</h3>
       <input type="text" id="coupon-input" placeholder="Enter coupon code" />
       <button onclick="redeemCoupon()">Redeem</button>
     </div>
-    
+
     <a href="ChaseCat_Ebook.pdf" class="download-link" id="download-link">Download Ebook</a>
-    
+
     <a href="index.html" class="back-button">⬅️ Back to Site</a>
   </div>
 
@@ -393,6 +393,51 @@
       dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
     }
 
+    // Custom notification function
+    function showNotification(message, isSuccess) {
+      const notification = document.createElement('div');
+      notification.className = 'custom-notification';
+      notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 25px;
+        border-radius: 10px;
+        color: #fff;
+        font-size: 1.1em;
+        z-index: 1000;
+        animation: slideIn 0.5s ease-out;
+        background: ${isSuccess ? 'linear-gradient(135deg, #000428 0%, #004e92 100%)' : '#f44336'};
+        border: 2px solid ${isSuccess ? '#004e92' : '#da190b'};
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        display: flex;
+        align-items: center;
+        gap: 10px; /* Add gap between text and icon */
+      `;
+      if (isSuccess) {
+        const img = document.createElement('img');
+        img.src = 'greencheck.png';
+        img.alt = 'Success';
+        img.style.width = '20px';
+        img.style.height = '20px';
+        notification.appendChild(img);
+      }
+      const messageSpan = document.createElement('span');
+      messageSpan.textContent = message;
+      notification.appendChild(messageSpan);
+      document.body.appendChild(notification);
+
+      setTimeout(() => {
+        notification.style.animation = 'slideOut 0.5s ease-in';
+        setTimeout(() => notification.remove(), 500);
+      }, 3000);
+    }
+
+    function playSuccessSound() {
+      const audio = new Audio('data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4LjI5LjEwMAAAAAAAAAAAAAAA//OEAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAASAAAeMwAUFBQUFCIiIiIiIjAwMDAwPz8/Pz8/TU1NTU1ea2tra2t7e3t7e3uIiIiIiIiWlpaWlpaknJycnJycqqqqqqqqs7OzswAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV');
+      audio.play();
+    }
+
     function redeemCoupon() {
       const couponCode = document.getElementById("coupon-input").value;
       const validCoupons = { "CODE123": "ChaseCat_Ebook.pdf" }; // Example coupon code
@@ -400,11 +445,30 @@
 
       if (validCoupons[couponCode]) {
         downloadLink.style.display = "block";
-        alert("Coupon redeemed successfully! Click the link to download your ebook.");
+        showNotification("Coupon redeemed successfully! Click the link to download your ebook.", true);
+        playSuccessSound();
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#ff8c00', '#ffd700', '#ffffff']
+        });
       } else {
-        alert("Invalid coupon code.");
+        showNotification("Invalid coupon code.", false);
       }
     }
   </script>
+
+  <style>
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes slideOut {
+      from { transform: translateX(0); opacity: 1; }
+      to { transform: translateX(100%); opacity: 0; }
+    }
+  </style>
 </body>
 </html>
