@@ -205,6 +205,32 @@
       transform: translateY(-2px);
       box-shadow: 0 6px 12px rgba(0,0,0,0.3);
     }
+    .coupon-section {
+      margin-top: 20px;
+    }
+    .coupon-section input {
+      padding: 10px;
+      width: 200px;
+      font-size: 1em;
+    }
+    .coupon-section button {
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: #ff8c00;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+    .download-link {
+      display: none;
+      margin-top: 20px;
+      font-size: 1.2em;
+      color: #000;
+      text-decoration: none;
+      background-color: #ffd700;
+      padding: 10px 20px;
+      border-radius: 5px;
+    }
 
     /* Instructions Section */
     .instructions-header {
@@ -313,6 +339,15 @@
     </p>
     <p class="payment-info">Price: $1.20 = (0.00613 SOL)</p>
     <a href="http://t.me/ChaseEbook_bot" class="cta-button">Buy on Telegram</a>
+    
+    <div class="coupon-section">
+      <h3>Or Use Coupon Code</h3>
+      <input type="text" id="coupon-input" placeholder="Enter coupon code" />
+      <button onclick="redeemCoupon()">Redeem</button>
+    </div>
+    
+    <a href="ChaseCat_Ebook.pdf" class="download-link" id="download-link">Download Ebook</a>
+    
     <a href="index.html" class="back-button">⬅️ Back to Site</a>
   </div>
 
@@ -356,6 +391,19 @@
     function toggleDropdown() {
       var dropdown = document.getElementById("dropdownMenu");
       dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+    }
+
+    function redeemCoupon() {
+      const couponCode = document.getElementById("coupon-input").value;
+      const validCoupons = { "CODE123": "ChaseCat_Ebook.pdf" }; // Example coupon code
+      const downloadLink = document.getElementById("download-link");
+
+      if (validCoupons[couponCode]) {
+        downloadLink.style.display = "block";
+        alert("Coupon redeemed successfully! Click the link to download your ebook.");
+      } else {
+        alert("Invalid coupon code.");
+      }
     }
   </script>
 </body>
