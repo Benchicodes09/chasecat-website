@@ -54,7 +54,7 @@
       color: #fff;
       font-size: 2.5em;
       margin: 0;
-      animation: fadeInDown 1s ease-out;
+      animation: fadeInDown 1 Police: 1s ease-out;
     }
     header p {
       color: #fff;
@@ -341,12 +341,12 @@
     <a href="http://t.me/ChaseEbook_bot" class="cta-button">Buy on Telegram</a>
 
     <div class="coupon-section">
-      <h3>Or Use Coupon Code</h3>
+      <h3>Or Use Coupon Code, to download immediately</h3>
       <input type="text" id="coupon-input" placeholder="Enter coupon code" />
       <button onclick="redeemCoupon()">Redeem</button>
     </div>
 
-    <a href="ChaseCat_Ebook.pdf" class="download-link" id="download-link">Download Ebook</a>
+    <a href="ChaseCat_Ebook.pdf" class="download-link" id="download-link" onclick="handleDownloadClick()">Download Ebook</a>
 
     <a href="index.html" class="back-button">⬅️ Back to Site</a>
   </div>
@@ -435,29 +435,14 @@
     }
 
     function redeemCoupon() {
-      const couponCode = document.getElementById("coupon-input").value;
-      const validCoupons = { "CODE123": "ChaseCat_Ebook.pdf" }; // Example coupon code
+      const couponCode = document.getElementById("coupon-input").value.trim().toLowerCase();
+      const validCoupons = ["chase2025"]; // Add more codes as needed
       const downloadLink = document.getElementById("download-link");
 
-      if (validCoupons[couponCode]) {
-        const hasRedeemed = localStorage.getItem('hasRedeemed');
-
-        if (!hasRedeemed) {
-          // First redemption: briefly show download link, then hide it
-          downloadLink.style.display = "block";
-          showNotification("Coupon redeemed successfully! Click the link to download your ebook.", true);
-          localStorage.setItem('hasRedeemed', 'true');
-          // Hide the download link after a short delay (e.g., after notification)
-          setTimeout(() => {
-            downloadLink.style.display = "none";
-          }, 3000); // Matches notification duration
-        } else {
-          // Subsequent redemptions: show thank you message
-          showNotification("Thank you for downloading", true);
-          downloadLink.style.display = "none"; // Ensure it stays hidden
-        }
-
-        // Trigger confetti on every valid redemption
+      if (validCoupons.includes(couponCode)) {
+        downloadLink.style.display = "block";
+        showNotification("Coupon redeemed successfully! Click the link to download your ebook.", true);
+        // Trigger confetti
         confetti({
           particleCount: 100,
           spread: 70,
@@ -473,13 +458,11 @@
       }
     }
 
-    // Ensure download link is hidden if already redeemed on page load
-    document.addEventListener('DOMContentLoaded', function() {
-      const hasRedeemed = localStorage.getItem('hasRedeemed');
-      if (hasRedeemed) {
-        document.getElementById('download-link').style.display = 'none';
-      }
-    });
+    function handleDownloadClick() {
+      const downloadLink = document.getElementById("download-link");
+      downloadLink.style.display = "none"; // Hide the button after click
+      showNotification("Thank you for downloading the ebook!", true);
+    }
   </script>
 
   <style>
