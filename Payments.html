@@ -434,36 +434,46 @@
       }, 3000);
     }
 
-    function playSuccessSound() {
-      const audio = new Audio('data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4LjI5LjEwMAAAAAAAAAAAAAAA//OEAAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAASAAAeMwAUFBQUFCIiIiIiIjAwMDAwPz8/Pz8/TU1NTU1ea2tra2t7e3t7e3uIiIiIiIiWlpaWlpaknJycnJycqqqqqqqqs7OzswAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD/80DEAAAAA0gAAAAATEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQsRbAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVf/zQMSkAAADSAAAAABVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV');
-      audio.play();
-    }
+    
 
     function redeemCoupon() {
       const couponCode = document.getElementById("coupon-input").value;
       const validCoupons = { "CODE123": "ChaseCat_Ebook.pdf" }; // Example coupon code
       const downloadLink = document.getElementById("download-link");
-      
-      // Check local storage first
-      const usedCoupons = JSON.parse(localStorage.getItem('usedCoupons') || '[]');
-      if (usedCoupons.includes(couponCode)) {
-        showNotification("You have already used this coupon code.", false);
-        return;
-      }
 
       if (validCoupons[couponCode]) {
-        // Save to local storage
-        usedCoupons.push(couponCode);
-        localStorage.setItem('usedCoupons', JSON.stringify(usedCoupons));
         
         downloadLink.style.display = "block";
         showNotification("Coupon redeemed successfully! Click the link to download your ebook.", true);
-        playSuccessSound();
+        
+        // Play cheerful bell chime sound
+        const bellSound = new Audio("data:audio/wav;base64,//uQRAAAAWMSLwUIYAAsYkXgoQwAEaYLWfkWgAI0wWs/ItAAAGDgYtAgAyN+QWaAAihwMWm4G8QQRDiMcCBcH3Eh+LAB6v0/MHhGAEUgJhJsAGg7D9TJLBbXMDgsYkf3UAFYnAFv4nqe7ryHwW78cHLVBHFxgYYUOnam2Jgd8uQGIqZDB1Q93wLGDkwX9nfwfgfm7cfzPOWR/8lGmPav5xVwnIiJS6HXk+BVKZF+JcWjAsb/GEuq/eFdpuzSqeYTcfi6idkyugwfYwXFU1+5fZKUaRKYCwkkFQVfcAs1fXA5V+++FGfvjJ/CxURaSxaBvGdGDhfXE28LWuT9ozCl5xw4Yq5OGazvV24mZVSoOO0yZ31j7kYvtwYK6ygKAXFpZnQ7zLQgPkZEVyxXGmcnO+WwExpJpLXBWu68ZDELMvAwOB3VVEFu+BWyASmbhLbfUVz2Ip3AwgHUT8sL1q4ePmYg+VZF/JOEaV4t0RHR+NYGWHiwQiQu3DReG2WVZEM8R0+8BNRf6gNXJLymiodVnlOj+XnUiJDGX5xZLWIk/s5YPzf9P2WvyDyV9oOJMlz8jcw+yXsJ7YHEcMuYd4D/gNZfE0qXddpPtzv0Xh0YZZnG3SxPSeMJSkFaWtC2ggWrq6CxrcQlyyBQxyVCBCxfyGjnWumqsIeztDQKv84dOv0Xed1rKrbkEELwLZpbGIgQYcLtNhPLqEkFGeK7vkF6+Yt779kc0BAyQCIKO3qEYxQeSWdFJH0/vE8BVHNGaQkS0YhhQqGDHJJiQkxG2lHw6jbtiR4JzYG5IsR5Ps6B1lN/zGZqfVmyO8ykqJGQB5YNQuEw7YbG1QaJ1ciXtEh5XcQlZLYIvq0wYENO");
+        bellSound.volume = 0.8; // Slightly reduced volume for better sound
+        bellSound.play().catch(e => console.error('Error playing sound:', e));
+        
+        // Trigger confetti with vibration
+        const duration = 3000; // 3 seconds
+        const interval = 100; // Vibration pattern interval
+        let timeElapsed = 0;
+        
+        const vibrateInterval = setInterval(() => {
+          if (timeElapsed < duration && 'vibrate' in navigator) {
+            navigator.vibrate([10, 10]); // Subtle vibration pattern
+          } else {
+            clearInterval(vibrateInterval);
+          }
+          timeElapsed += interval;
+        }, interval);
+
         confetti({
           particleCount: 100,
           spread: 70,
           origin: { y: 0.6 },
-          colors: ['#ff8c00', '#ffd700', '#ffffff']
+          colors: ['#ff8c00', '#ffd700', '#ffffff'],
+          ticks: 300,
+          gravity: 0.8,
+          decay: 0.95,
+          startVelocity: 30
         });
       } else {
         showNotification("Invalid coupon code.", false);
