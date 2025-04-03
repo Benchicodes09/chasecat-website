@@ -328,95 +328,71 @@
         margin-top: 10px;
       }
 
-      /* Motivational Images */
-      .motivation-title {
+      /* Motivational Images Section */
+      .motivational-images {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
         text-align: center;
+      }
+      .motivation-title {
         font-size: 2.5em;
-        margin: 30px 0;
-        color: white;
+        color: #ffffff;
+        margin-bottom: 30px;
         text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
       }
-      .motivational-carousel {
+      .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        justify-items: center;
+      }
+      .image-item {
         position: relative;
-        width: 300px;
-        height: 300px;
-        margin: 20px auto;
         overflow: hidden;
-        perspective: 1000px;
-        touch-action: pan-y;
-        background: linear-gradient(135deg, #000428, #004e92);
-        padding: 20px;
-        border-radius: 35px;
-        border: 3px solid #000;
-        box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        animation: fadeIn 0.8s ease-out;
       }
-      .motivational-carousel img {
+      .image-item img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.3s ease;
+      }
+      .image-item:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      }
+      .image-item:hover img {
+        transform: scale(1.1);
+      }
+      .overlay {
         position: absolute;
-        width: calc(100% - 40px);
-        height: calc(100% - 40px);
-        object-fit: contain;
-        border-radius: 25px;
-        transition: all 0.8s ease;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.6);
+        color: #fff;
+        padding: 15px;
+        font-size: 1.2em;
+        font-weight: bold;
+        text-align: center;
         opacity: 0;
-        transform: translateX(100%) rotateY(-15deg);
-        background: white;
-        padding: 10px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        transition: opacity 0.3s ease;
       }
-      .motivational-carousel img.active {
+      .image-item:hover .overlay {
         opacity: 1;
-        transform: translateX(0) rotateY(0deg);
       }
-      .motivational-carousel img.active:hover {
-        transform: scale(1.05);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-      }
-      .motivational-carousel img.exit {
-        opacity: 0;
-        transform: translateX(-100%) rotateY(15deg);
-      }
-
-      /* Desktop Layout Adjustments for Carousel */
-      @media only screen and (min-width: 1024px) {
-        .motivational-carousel {
-          width: 90%;
-          max-width: 1200px;
-          height: auto;
-          display: flex;
-          justify-content: space-between;
-          gap: 20px;
-          perspective: none;
+      @media (max-width: 768px) {
+        .image-grid {
+          grid-template-columns: 1fr;
         }
-        .motivational-carousel img {
-          position: static;
-          width: calc(20% - 16px);
-          height: 200px;
-          border-radius: 25px;
-          opacity: 1;
-          transform: none;
-          transition: transform 0.3s ease;
+        .image-item img {
+          height: 250px;
         }
-        .motivational-carousel img:hover {
-          transform: translateY(-10px);
-        }
-        .carousel-buttons {
-          display: none;
-        }
-      }
-
-      /* Carousel Buttons */
-      .carousel-buttons {
-        margin: 10px auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 30px;
-      }
-      .carousel-buttons .carousel-btn {
-        width: 40px;
-        height: 40px;
-        cursor: pointer;
-        border-radius: 50%;
       }
 
       /* Contract Address Section */
@@ -1238,7 +1214,7 @@
         </div>
       </nav>
       <h1 data-text="$Chasecat Token">$Chasecat Token</h1>
-      <p>"An ai powered motivational memecoin. "</p>
+      <p>"An ai powered motivational memecoin."</p>
       <div class="buy-container">
         <a href="https://raydium.io/swap" target="_blank" class="buy-button">Buy Token</a>
       </div>
@@ -1251,19 +1227,32 @@
       </marquee>
     </div>
 
-    <!-- Motivational Carousel -->
-    <h2 class="motivation-title">Motivation</h2>
-    <div class="motivational-carousel">
-      <img src="motivational1.png" alt="Motivation 1" class="active" />
-      <img src="motivational2.png" alt="Motivation 2" />
-      <img src="motivational3.png" alt="Motivation 3" />
-      <img src="motivational4.png" alt="Motivation 4" />
-      <img src="motivational5.png" alt="Motivation 5" />
-    </div>
-    <div class="carousel-buttons">
-      <img src="leftbutton.png" alt="Previous" class="carousel-btn left" />
-      <img src="rightbutton.png" alt="Next" class="carousel-btn right" />
-    </div>
+    <!-- Motivational Images Section -->
+    <section class="motivational-images">
+      <h2 class="motivation-title">Motivational Images</h2>
+      <div class="image-grid">
+        <div class="image-item">
+          <img src="motivational1.png" alt="Person climbing a mountain with a sunrise backdrop" />
+          <div class="overlay">Rise Above</div>
+        </div>
+        <div class="image-item">
+          <img src="motivational2.png" alt="Open road leading to a bright horizon" />
+          <div class="overlay">Journey Onward</div>
+        </div>
+        <div class="image-item">
+          <img src="motivational3.png" alt="Hands holding a glowing light bulb" />
+          <div class="overlay">Ignite Your Passion</div>
+        </div>
+        <div class="image-item">
+          <img src="motivational4.png" alt="Silhouette of a person celebrating on a hill" />
+          <div class="overlay">Achieve Greatness</div>
+        </div>
+        <div class="image-item">
+          <img src="motivational5.png" alt="Cat chasing a dream in the sky" />
+          <div class="overlay">Chase Your Dreams</div>
+        </div>
+      </div>
+    </section>
 
     <!-- Contract Address Section -->
     <div class="container" style="background: linear-gradient(135deg, #ffffff, #f5f5f5); border: 3px solid #000; box-shadow: 0 8px 20px rgba(0,0,0,0.1);">
@@ -1385,7 +1374,6 @@
        <div class="meme-container">
         <img src="meme8.png" alt="Meme 8" />
       </div>
-        </div>
        <div class="meme-container">
         <img src="meme9.png" alt="Meme 9" />
       </div>
@@ -1641,54 +1629,6 @@
         dropdown.classList.toggle('show');
       }
 
-      // Responsive Carousel Initialization
-      document.addEventListener("DOMContentLoaded", function () {
-        const images = document.querySelectorAll(".motivational-carousel img");
-        if (window.innerWidth < 1024) {
-          let currentIndex = 0;
-          let startX = 0;
-          let isDragging = false;
-
-          function showImage(index) {
-            images.forEach((img, i) => {
-              img.classList.remove("active", "exit");
-              if (i === index) img.classList.add("active");
-              else if (i < index) img.classList.add("exit");
-            });
-          }
-
-          function handleSwipe(newIndex) {
-            if (newIndex < 0) newIndex = images.length - 1;
-            if (newIndex >= images.length) newIndex = 0;
-            currentIndex = newIndex;
-            showImage(currentIndex);
-          }
-
-          const carousel = document.querySelector(".motivational-carousel");
-          carousel.addEventListener("touchstart", (e) => {
-            startX = e.touches[0].clientX;
-            isDragging = true;
-          });
-          carousel.addEventListener("touchmove", (e) => {
-            if (!isDragging) return;
-            let diff = e.touches[0].clientX - startX;
-            if (Math.abs(diff) > 50) {
-              handleSwipe(diff < 0 ? currentIndex + 1 : currentIndex - 1);
-              isDragging = false;
-            }
-          });
-          carousel.addEventListener("touchend", () => isDragging = false);
-
-          const leftBtn = document.querySelector(".carousel-buttons .carousel-btn.left");
-          const rightBtn = document.querySelector(".carousel-buttons .carousel-btn.right");
-          leftBtn.addEventListener("click", () => handleSwipe(currentIndex - 1));
-          rightBtn.addEventListener("click", () => handleSwipe(currentIndex + 1));
-          showImage(currentIndex);
-        } else {
-          images.forEach(img => img.classList.add("active"));
-        }
-      });
-
       // Motivation Analyzer Functionality
       const messages = {
         emotional: [
@@ -1839,12 +1779,4 @@ We'll send the tokens to your wallet shortly after receiving your email.`;
             confetti({
               particleCount: 100,
               spread: 70,
-              origin: { y: 0.6 },
-              colors: ['#ff8c00', '#ffd700', '#ffffff']
-            });
-          }
-        }, 2000);
-      });
-    </script>
-  </body>
-</html>
+              origin:
