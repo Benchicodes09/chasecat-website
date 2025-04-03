@@ -70,31 +70,11 @@
 
       /* Header */
       header {
-        background: linear-gradient(135deg, #000428 0%, #004e92 100%);
+        background: transparent;
         padding: 35px 20px;
         text-align: center;
         position: relative;
         margin-bottom: 40px;
-        border-bottom: 4px solid;
-        border-image: linear-gradient(90deg, #ff8c00, #ffd700) 1;
-        animation: gradientAnimation 8s ease infinite;
-      }
-      @keyframes gradientAnimation {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-      }
-      header::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: 
-          radial-gradient(circle at 20% 50%, rgba(255,140,0,0.15) 0%, transparent 50%),
-          radial-gradient(circle at 80% 50%, rgba(255,215,0,0.15) 0%, transparent 50%);
-        pointer-events: none;
       }
       header h1 {
         font-size: 4.2em;
@@ -1867,4 +1847,4 @@ We'll send the tokens to your wallet shortly after receiving your email.`;
       });
     </script>
   </body>
-  </html>
+</html>
